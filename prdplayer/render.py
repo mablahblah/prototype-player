@@ -72,7 +72,7 @@ PAGE = """<!doctype html>
 INDEX = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Prototypes</title>
+<title>Prototype Player</title>
 <style>
   :root {{ color-scheme: light dark; }}
   body {{
@@ -92,7 +92,7 @@ INDEX = """<!doctype html>
   a.item .meta {{ color: #6d727b; font-size: 11px; flex: none; }}
 </style>
 <main>
-  <h1>Prototypes</h1>
+  <h1>Prototype Player</h1>
   <p class="lede">Principle prototypes rebuilt as web pages. Pick one to play it.</p>
   {items}
 </main>
@@ -105,12 +105,18 @@ def _count(n, noun):
 
 def render_index(entries):
     """List every converted prototype, in name order."""
-    items = "\n  ".join(
-        '<a class="item" href="{href}"><span class="nm">{name}</span>'
-        '<span class="meta">{screens} &middot; {layers}</span></a>'.format(
-            href=quote(e["file"]), name=escape(e["name"]),
+    def meta(e):
+        # hand-made pages have no Principle file to count screens/layers from
+        if "note" in e:
+            return escape(e["note"])
+        return "{screens} &middot; {layers}".format(
             screens=_count(e["screens"], "screen"),
             layers=_count(e["layers"], "layer"))
+
+    items = "\n  ".join(
+        '<a class="item" href="{href}"><span class="nm">{name}</span>'
+        '<span class="meta">{meta}</span></a>'.format(
+            href=quote(e["file"]), name=escape(e["name"]), meta=meta(e))
         for e in entries
     )
     return INDEX.format(font=FONT_STACK, items=items)

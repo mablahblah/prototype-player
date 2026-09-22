@@ -53,6 +53,23 @@ class ConvertOutputLayout(unittest.TestCase):
 
         self.assertIn('href="../index.html"', page)
 
+    def test_the_index_lists_hand_made_pages_alongside_converted_ones(self):
+        hand_made = Path("out/html-conversions")
+        hand_made.mkdir(parents=True)
+        (hand_made / "demo-page.html").write_text(
+            '<title>Demo Page</title>\n'
+            '<meta name="prototype-note" content="ProtoPie rebuild">\n')
+
+        convert.convert(SOURCE)
+        listed = convert.write_index()
+
+        index = Path("out/index.html").read_text()
+
+        self.assertEqual(2, listed)
+        self.assertIn('href="html-conversions/demo-page.html"', index)
+        self.assertIn("Demo Page", index)
+        self.assertIn("ProtoPie rebuild", index)
+
 
 if __name__ == "__main__":
     unittest.main()

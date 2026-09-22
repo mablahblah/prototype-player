@@ -7,6 +7,7 @@
 Each run also rebuilds out/index.html, the list the players link back to.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -19,15 +20,50 @@ OUT = Path("out")
 PRINCE_PROTOS = OUT / "prince-protos"
 # Records what has been converted, so converting one file still lists them all.
 MANIFEST = PRINCE_PROTOS / ".index.json"
+# Pages written by hand, dropped in here directly. No manifest tracks these;
+# the folder itself is the record, so it's re-scanned on every index rebuild.
+HAND_MADE = OUT / "html-conversions"
+
+
+def _prototype_note(html):
+    """The content of <meta name="prototype-note" content="...">, if present."""
+    for tag in re.findall(r"<meta[^>]*>", html, re.IGNORECASE):
+        if re.search(r'name=["\']prototype-note["\']', tag, re.IGNORECASE):
+            match = re.search(r'content=["\'](.*?)["\']', tag, re.IGNORECASE)
+            if match:
+                return match.group(1)
+    return None
+
+
+def _hand_made_entries():
+    """Build index entries for out/html-conversions/*.html, found fresh each run."""
+    if not HAND_MADE.exists():
+        return []
+    entries = []
+    for path in sorted(HAND_MADE.glob("*.html")):
+        html = path.read_text()
+        title = re.search(r"<title[^>]*>(.*?)</title>", html, re.IGNORECASE | re.DOTALL)
+        entry = {
+            "file": f"html-conversions/{path.name}",
+            "name": title.group(1).strip() if title else path.stem,
+        }
+        note = _prototype_note(html)
+        if note is not None:
+            entry["note"] = note
+        entries.append(entry)
+    return entries
 
 
 def write_index():
-    """Rebuild the index from every prototype converted so far."""
+    """Rebuild the index from converted prototypes plus any hand-made pages."""
     entries = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     # Drop anything whose page has since been deleted.
     entries = {k: v for k, v in entries.items() if (PRINCE_PROTOS / k).exists()}
-    listing = sorted(entries.values(), key=lambda e: e["name"])
+    listing = list(entries.values()) + _hand_made_entries()
+    listing.sort(key=lambda e: e["name"])
     (OUT / "index.html").write_text(render_index(listing))
+    # Only converted entries are persisted; hand-made pages are never recorded,
+    # since the folder itself is the source of truth for those.
     MANIFEST.write_text(json.dumps(entries, indent=2))
     return len(listing)
 
