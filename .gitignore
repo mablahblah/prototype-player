@@ -1,6 +1,13 @@
-# --- Claude Code ---
-# The whole folder stays private. CLAUDE.md at the project root is public.
+# --- Private to this machine ---
+# This repository is published as a worked example of the converter and the
+# player. It is not the home of the prototype archive, the project's planning
+# notes, or any tooling state. Anyone using it brings their own .prd files.
 .claude/
+.code-review-graph/
+.codegraph/
+docs/
+history/
+protos/
 
 # --- Local machine config ---
 .serve.json
