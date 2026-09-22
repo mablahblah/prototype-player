@@ -1,0 +1,9 @@
+# Crawling is allowed ON PURPOSE. Do not add a Disallow rule here.
+#
+# These pages are kept out of search results by the X-Robots-Tag header in
+# vercel.json, which says noindex. A crawler has to fetch a page to read that
+# header. Blocking the fetch here would hide the instruction, and a linked
+# address could then still be listed in results.
+
+User-agent: *
+Allow: /
