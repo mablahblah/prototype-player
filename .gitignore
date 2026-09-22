@@ -12,13 +12,11 @@ protos/
 # --- Local machine config ---
 .serve.json
 
-# --- Generated output ---
-# Rebuilt any time by: python3 convert.py protos/*.prd
-out/prince-protos/
-out/index.html
-
-# out/html-conversions/ is NOT ignored. Those pages are written by hand and
-# nothing regenerates them. They are what prototypes.mablahblah.com serves.
+# --- The published player ---
+# Everything under out/ is deployed to prototypes.mablahblah.com, so all of it
+# is committed: the list page, the pages rebuilt from .prd files, and the ones
+# written by hand. None of it contains the original file paths that the .prd
+# source files carry, because the converter keeps only the image data.
 
 # --- Secrets and credentials ---
 .env
