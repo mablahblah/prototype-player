@@ -2,6 +2,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RA - Mobile Options · OPT1</title>
+<meta name="prototype-note" content="ProtoPie rebuild">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
@@ -96,79 +97,94 @@
   </div>
 </div>
 
-<div class="caption">OPT1 — accordion lesson list</div>
-
-<!-- Copy-embed control (self-contained: style + markup + script) -->
 <style>
-  #ce-wrap {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 2147483647; /* stays above the prototype's own layers */
+  /* the page's own body rule sets flex-direction: column (why the caption sat under the phone);
+     redeclaring it here puts the panel beside the phone instead */
+  body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
   }
-  #copy-embed {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 14px;
-    border: 1px solid #33363d;
-    border-radius: 8px;
-    background: #1e2023;
-    color: #b9bdc4;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  #panel {
+    width: 210px;
+    max-width: 90vw;
+    color: #8b8f98;
     font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .02em;
-    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* back link and icon button share one row, pinned to opposite edges */
+  #panel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+
+  #back {
+    display: inline-block; padding: 6px 11px 6px 8px;
+    border-radius: 7px; background: #24262b; color: #c8ccd4;
+    text-decoration: none;
+  }
+  #back:hover { background: #2e3138; color: #fff; }
+
+  #panel h1 { font-size: 13px; color: #e6e8ec; margin: 0 0 4px; font-weight: 600; }
+  #panel p { margin: 0; line-height: 1.5; }
+
+  #copy-embed {
+    display: inline-flex; align-items: center; justify-content: center;
+    flex: 0 0 auto; width: 28px; height: 28px; padding: 0;
+    border: 1px solid #33363d; border-radius: 7px; background: #1e2023;
+    color: #b9bdc4; cursor: pointer;
     transition: background-color .15s ease, color .15s ease, border-color .15s ease;
   }
-  #copy-embed:hover {
-    background: #26292e;
-    color: #e7e8ea;
-  }
-  #copy-embed[data-ce-state="done"] {
-    background: #204a3f;
-    color: #7fd9b9;
-    border-color: #2c5c4d;
-  }
-  #copy-embed[data-ce-state="error"] {
-    background: #4a2020;
-    color: #e29a9a;
-    border-color: #5c2c2c;
-  }
+  #copy-embed svg { display: block; }
+  #copy-embed:hover { background: #26292e; color: #e7e8ea; }
+  #copy-embed[data-ce-state="done"] { background: #204a3f; color: #7fd9b9; border-color: #2c5c4d; }
+  #copy-embed[data-ce-state="error"] { background: #4a2020; color: #e29a9a; border-color: #5c2c2c; }
 </style>
 
-<div id="ce-wrap">
-  <button type="button" id="copy-embed">Copy embed</button>
+<div id="panel">
+  <div id="panel-top">
+    <a id="back" href="../index.html">&larr; All prototypes</a>
+    <button type="button" id="copy-embed" aria-label="Copy embed code" title="Copy embed code">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <polyline points="9 6 3 12 9 18"></polyline>
+        <line x1="14" y1="4" x2="10" y2="20"></line>
+        <polyline points="15 6 21 12 15 18"></polyline>
+      </svg>
+    </button>
+  </div>
+  <h1>RA - Mobile Options · OPT1</h1>
+  <p class="desc">OPT1 — accordion lesson list</p>
 </div>
 
 <script>
 (function () {
-  var ceWrap = document.getElementById('ce-wrap');
-  var ceBtn = document.getElementById('copy-embed');
+  var panel = document.getElementById('panel');
 
-  // Never show this control when the page is loaded inside someone else's iframe
-  // (e.g. embedded in a portfolio) — only the top-level viewer should see it.
+  // inside someone else's iframe, an embed should show only the phone
   if (window.self !== window.top) {
-    ceWrap.style.display = 'none';
+    panel.style.display = 'none';
     return;
   }
 
-  // Placeholders below are substituted per-page at paste time; the address
-  // is always the live one, regardless of where this page happens to be viewed.
+  var ceBtn = document.getElementById('copy-embed');
   var CE_SNIPPET = '<iframe src="https://prototypes.mablahblah.com/ra-mobile-options-opt1" width="395" height="910" style="border:0" title="RA - Mobile Options · OPT1" loading="lazy"></iframe>';
 
+  // the button has no text label to swap, so success briefly swaps the code
+  // glyph for a tick; failure is shown by colour alone (see the CSS states above)
+  var CE_ICON_DEFAULT = ceBtn.innerHTML;
+  var CE_ICON_CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
   var ceResetTimer = null;
-  function ceShowState(state, label) {
+  function ceShowState(state) {
     clearTimeout(ceResetTimer);
     ceBtn.dataset.ceState = state;
-    ceBtn.textContent = label;
+    ceBtn.innerHTML = state === 'done' ? CE_ICON_CHECK : CE_ICON_DEFAULT;
     ceResetTimer = setTimeout(function () {
       delete ceBtn.dataset.ceState;
-      ceBtn.textContent = 'Copy embed';
+      ceBtn.innerHTML = CE_ICON_DEFAULT;
     }, 1800);
   }
 
-  // Works on insecure origins / older browsers where navigator.clipboard is absent.
   function ceFallbackCopy(text) {
     var ta = document.createElement('textarea');
     ta.value = text;
@@ -191,7 +207,7 @@
 
   ceBtn.addEventListener('click', function () {
     function finish(ok) {
-      ceShowState(ok ? 'done' : 'error', ok ? 'Copied' : 'Copy failed');
+      ceShowState(ok ? 'done' : 'error');
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(CE_SNIPPET).then(
