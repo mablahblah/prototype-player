@@ -3,8 +3,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RA - Mobile Options · OPT3</title>
 <script>
-// an embedded page is the phone and nothing else: no dark page, no padding
-if (window.self !== window.top) document.documentElement.className += ' embedded';
+// An embedded page is the phone and nothing else: no dark page, no padding.
+// The phone keeps its 375 x 812 drawing size and is scaled whole, so every
+// part of it grows and shrinks together with the frame it was given.
+if (window.self !== window.top) {
+  document.documentElement.className += ' embedded';
+  (function () {
+    var DRAWN_WIDTH = 375, DRAWN_HEIGHT = 812;
+    function fit() {
+      var room = Math.min(
+        window.innerWidth / DRAWN_WIDTH,
+        window.innerHeight / DRAWN_HEIGHT
+      );
+      // A frame with no width or height yet would scale the phone away
+      // entirely; leave the last good size until real room arrives.
+      if (!(room > 0) || !isFinite(room)) return;
+      document.documentElement.style.setProperty('--fit', room);
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
+  })();
+}
 </script>
 <meta name="prototype-note" content="ProtoPie rebuild">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,12 +58,19 @@ if (window.self !== window.top) document.documentElement.className += ' embedded
     box-shadow: 0 24px 70px rgba(0,0,0,.55);
   }
 
-  /* embed mode: the iframe is exactly the 375x812 phone, nothing around it */
+  /* embed mode: the frame holds the phone and nothing else, at any size.
+     --fit is set by the script in the head, and is how many times bigger or
+     smaller than 375 x 812 the phone is drawn. */
   html.embedded, html.embedded body {
     margin: 0; padding: 0; gap: 0; min-height: 0;
-    display: block; background: transparent;
+    display: block; background: transparent; overflow: hidden;
   }
-  html.embedded #device { border-radius: 0; box-shadow: none; }
+  html.embedded #device {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(var(--fit, 1));
+    transform-origin: center center;
+    border-radius: 0; box-shadow: none;
+  }
 
   #statusbar {
     position: absolute; top: 0; left: 0; right: 0; height: 48px; z-index: 60;
