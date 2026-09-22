@@ -2,6 +2,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RA - Mobile Options · OPT2</title>
+<script>
+// an embedded page is the phone and nothing else: no dark page, no padding
+if (window.self !== window.top) document.documentElement.className += ' embedded';
+</script>
 <meta name="prototype-note" content="ProtoPie rebuild">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,8 +33,15 @@
   #device {
     width: 375px; height: 812px; position: relative; overflow: hidden;
     border-radius: 44px; background: var(--app-bg); color: var(--ink);
-    box-shadow: 0 24px 70px rgba(0,0,0,.55), 0 0 0 11px #0d0e10, 0 0 0 13px #2a2c31;
+    box-shadow: 0 24px 70px rgba(0,0,0,.55);
   }
+
+  /* embed mode: the iframe is exactly the 375x812 phone, nothing around it */
+  html.embedded, html.embedded body {
+    margin: 0; padding: 0; gap: 0; min-height: 0;
+    display: block; background: transparent;
+  }
+  html.embedded #device { border-radius: 0; box-shadow: none; }
 
   #statusbar {
     position: absolute; top: 0; left: 0; right: 0; height: 48px; z-index: 60;
@@ -208,7 +219,7 @@
   }
 
   var ceBtn = document.getElementById('copy-embed');
-  var CE_SNIPPET = '<iframe src="https://prototypes.mablahblah.com/ra-mobile-options-opt2" width="395" height="910" style="border:0" title="RA - Mobile Options · OPT2" loading="lazy"></iframe>';
+  var CE_SNIPPET = '<iframe src="https://prototypes.mablahblah.com/ra-mobile-options-opt2" width="375" height="812" style="border:0" title="RA - Mobile Options · OPT2" loading="lazy"></iframe>';
 
   // the button has no text label to swap, so success briefly swaps the code
   // glyph for a tick; failure is shown by colour alone (see the CSS states above)
