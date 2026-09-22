@@ -93,7 +93,7 @@ INDEX = """<!doctype html>
 </style>
 <main>
   <h1>Prototype Player</h1>
-  <p class="lede">Principle prototypes rebuilt as web pages. Pick one to play it.</p>
+  <p class="lede">Prototypes from retired design tools, rebuilt as web pages. Pick one to play it.</p>
   {items}
 </main>
 """
