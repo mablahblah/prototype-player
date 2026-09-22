@@ -59,7 +59,7 @@ PAGE = """<!doctype html>
 </style>
 <div id="frame"><div id="device"><div id="stage"></div></div></div>
 <div id="panel">
-  <a id="back" href="index.html">&larr; All prototypes</a>
+  <a id="back" href="../index.html">&larr; All prototypes</a>
   <h1>{title}</h1>
   <p>Click through the prototype, or jump to any screen.</p>
   {buttons}

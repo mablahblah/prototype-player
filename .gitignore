@@ -7,7 +7,11 @@
 
 # --- Generated output ---
 # Rebuilt any time by: python3 convert.py protos/*.prd
-out/
+out/prince-protos/
+out/index.html
+
+# out/html-conversions/ is NOT ignored. Those pages are written by hand and
+# nothing regenerates them. They are what prototypes.mablahblah.com serves.
 
 # --- Secrets and credentials ---
 .env

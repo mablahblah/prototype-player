@@ -15,15 +15,17 @@ from prdplayer.model import build
 from prdplayer.render import render, render_index
 
 OUT = Path("out")
+# Generated pages live one level below the index, so its links can reach them.
+PRINCE_PROTOS = OUT / "prince-protos"
 # Records what has been converted, so converting one file still lists them all.
-MANIFEST = OUT / ".index.json"
+MANIFEST = PRINCE_PROTOS / ".index.json"
 
 
 def write_index():
     """Rebuild the index from every prototype converted so far."""
     entries = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     # Drop anything whose page has since been deleted.
-    entries = {k: v for k, v in entries.items() if (OUT / k).exists()}
+    entries = {k: v for k, v in entries.items() if (PRINCE_PROTOS / k).exists()}
     listing = sorted(entries.values(), key=lambda e: e["name"])
     (OUT / "index.html").write_text(render_index(listing))
     MANIFEST.write_text(json.dumps(entries, indent=2))
@@ -33,13 +35,16 @@ def write_index():
 def convert(src):
     src = Path(src)
     model = build(load(src))
-    OUT.mkdir(parents=True, exist_ok=True)
-    dest = OUT / (src.stem + ".html")
+    PRINCE_PROTOS.mkdir(parents=True, exist_ok=True)
+    dest = PRINCE_PROTOS / (src.stem + ".html")
     dest.write_text(render(model, src.stem))
 
     entries = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
+    # Keyed by filename alone, so write_index() can check it against
+    # PRINCE_PROTOS; "file" carries the path relative to out/, which is what
+    # index.html (one level up) needs for its link.
     entries[dest.name] = {
-        "file": dest.name,
+        "file": f"prince-protos/{dest.name}",
         "name": src.stem,
         "screens": len(model["screens"]),
         "layers": len(model["nodes"]),
