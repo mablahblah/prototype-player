@@ -1,0 +1,88 @@
+# --- Claude Code ---
+# The whole folder stays private. CLAUDE.md at the project root is public.
+.claude/
+
+# --- Local machine config ---
+.serve.json
+
+# --- Generated output ---
+# Rebuilt any time by: python3 convert.py protos/*.prd
+out/
+
+# --- Secrets and credentials ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.keychain
+credentials.json
+secrets.json
+*.secret
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- Node, in case tooling arrives later ---
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Editors and IDEs ---
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+*~
+.\#*
+\#*\#
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Windows and Linux ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+.directory
+.fuse_hidden*
+.nfs*
+
+# --- Scratch and archives ---
+*.log
+*.tmp
+*.bak
+*.orig
+*.rej
+tmp/
+temp/
+scratch/
