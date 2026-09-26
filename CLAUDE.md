@@ -31,6 +31,8 @@ protos/                    # source prototypes, read-only — local only, not pu
 out/
 ├── prince-protos/         # generated from .prd — rebuilt by the converter, not published
 └── html-conversions/      # written by hand, nothing regenerates them — published
+    └── ra-prototype-set/  # a set of related prototypes; each has its own folder,
+                           # holding index.html and its own copy of the course outline
 ```
 
 ## Source Formats

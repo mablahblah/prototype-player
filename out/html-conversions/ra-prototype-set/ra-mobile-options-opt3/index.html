@@ -1,7 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RA - Mobile Options · OPT2</title>
+<title>RA - Mobile Options · OPT3</title>
 <script>
 // An embedded page is the phone and nothing else: no dark page, no padding.
 // The phone keeps its 375 x 812 drawing size and is scaled whole, so every
@@ -38,6 +38,8 @@ if (window.self !== window.top) {
     --blue: #4fc3d9;
     --track: #ececec;
     --line: #e8eaee;
+    --green: #6fcf97;
+    --red: #eb5757;
     --card: #ffffff;
     --app-bg: #ffffff;
     --font: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -77,13 +79,7 @@ if (window.self !== window.top) {
   }
   #statusbar .icons { display: flex; align-items: center; gap: 6px; }
 
-  .screen {
-    position: absolute; inset: 0; background: var(--app-bg);
-    transform: translateX(100%); transition: transform .34s cubic-bezier(.4,0,.2,1);
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-  .screen.base { transform: translateX(0); }
-  .screen.in   { transform: translateX(0); }
+  .screen { position: absolute; inset: 0; background: var(--app-bg); display: flex; flex-direction: column; overflow: hidden; }
 
   .detail-head { flex: none; padding: 60px 22px 0; display: flex; align-items: flex-start; gap: 8px; }
   .back {
@@ -91,51 +87,43 @@ if (window.self !== window.top) {
     display: flex; align-items: center; justify-content: center; color: var(--ink); margin-top: -2px;
     border-radius: 50%; transition: background .15s ease;
   }
-  .back.blue { color: var(--teal); }
   .back:active { background: #f0f1f3; }
   .head-body { flex: 1; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-
-  /* plain-list header (course title + animated progress bar) */
   .head-title { text-align: center; font-weight: 800; font-size: 15px; margin: 4px 0 12px; }
   .hbar { height: 6px; border-radius: 3px; background: var(--track); overflow: hidden; }
   .hbar > i { display: block; height: 100%; width: 0; background: var(--blue); border-radius: 3px;
               transition: width 1.1s cubic-bezier(.4,0,.2,1); }
 
-  /* rich-list header */
-  .head-eyebrow { display: flex; align-items: baseline; gap: 10px; }
-  .head-eyebrow .lvl { color: var(--teal); font-weight: 900; font-size: 12px; letter-spacing: .05em; }
-  .head-eyebrow .lbl { font-weight: 900; font-size: 18px; }
+  .cols { flex: 1; display: flex; overflow: hidden; }
 
-  .list { flex: 1; overflow-y: auto; padding: 16px 18px 44px; -webkit-overflow-scrolling: touch; }
-  .list::-webkit-scrollbar { display: none; }  .list { scrollbar-width: none; }
+  /* left stepper rail */
+  .rail { flex: none; width: 66px; position: relative; overflow-y: auto; padding: 16px 0 40px; }
+  .rail::-webkit-scrollbar { display: none; }  .rail { scrollbar-width: none; }
+  .rail .track { position: absolute; left: 32px; top: 30px; bottom: 30px; width: 2px; background: var(--line); }
+  .step { position: relative; height: 42px; display: flex; align-items: center; gap: 8px; padding-left: 18px; cursor: pointer; }
+  .step .ring { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--green); background: #eafaf0; flex: none; z-index: 1; }
+  .step .n { font-size: 13px; color: var(--muted); font-weight: 700; }
+  .rail .marker { position: absolute; left: 11px; width: 7px; height: 7px; border-radius: 50%; background: var(--red);
+                  transition: top .3s cubic-bezier(.4,0,.2,1); z-index: 2; }
 
-  /* plain rows */
-  .plain .list { padding: 10px 26px 44px; }
-  .prow {
-    display: flex; align-items: center; gap: 14px; padding: 15px 4px;
-    border: 0; background: none; width: 100%; text-align: left; font: inherit; color: var(--ink);
-  }
-  .prow.tappable { cursor: pointer; }
-  .prow.tappable:active { opacity: .55; }
-  .prow .num { color: var(--muted); font-weight: 700; font-size: 15px; }
-  .prow .title { font-weight: 400; font-size: 16px; }
-
-  /* rich rows */
+  /* right rich list */
+  .cols .list { flex: 1; overflow-y: auto; padding: 6px 16px 40px; -webkit-overflow-scrolling: touch; }
+  .cols .list::-webkit-scrollbar { display: none; }  .cols .list { scrollbar-width: none; }
   .row {
     background: var(--card); border-radius: 12px; margin-bottom: 12px;
     box-shadow: 0 1px 3px rgba(20,24,40,.05), 0 8px 20px rgba(20,24,40,.05); overflow: hidden;
   }
-  .row-main { display: flex; align-items: center; gap: 13px; padding: 16px; cursor: pointer; user-select: none; }
+  .row-main { display: flex; align-items: center; gap: 11px; padding: 15px 14px; cursor: pointer; user-select: none; }
   .row-main .num { width: 14px; color: var(--muted); font-weight: 900; font-size: 15px; text-align: center; }
   .row-main .body { flex: 1; min-width: 0; }
-  .row-main .title { font-weight: 800; font-size: 15px; }
-  .row-main .mini { height: 4px; width: 74px; border-radius: 2px; background: var(--track); margin-top: 8px; }
+  .row-main .title { font-weight: 800; font-size: 14px; }
+  .row-main .mini { height: 4px; width: 62px; border-radius: 2px; background: var(--track); margin-top: 7px; }
   .chev { color: var(--muted); flex: none; transition: transform .3s cubic-bezier(.4,0,.2,1); }
   .row.open .chev { transform: rotate(90deg); }
   .sub { max-height: 0; overflow: hidden; transition: max-height .34s cubic-bezier(.4,0,.2,1); }
-  .sub-inner { padding: 2px 16px 12px 43px; }
-  .sub-item { display: flex; align-items: center; gap: 12px; padding: 9px 0; color: #5f636b; font-size: 14px; }
-  .sub-item .dot { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid #c7cbd1; flex: none; }
+  .sub-inner { padding: 2px 12px 12px 39px; }
+  .sub-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; color: #5f636b; font-size: 13px; }
+  .sub-item .dot { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #c7cbd1; flex: none; }
 </style>
 
 <div id="device">
@@ -148,31 +136,20 @@ if (window.self !== window.top) {
     </span>
   </div>
 
-  <!-- base: plain "Getting Started" list -->
-  <div id="s-plain" class="screen plain base">
+  <div class="screen">
     <div class="detail-head">
       <button class="back" aria-label="Back">
         <svg width="11" height="18" viewBox="0 0 11 18"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9.5 1.5l-8 7.5 8 7.5"/></svg>
       </button>
       <div class="head-body">
         <div class="head-title">Oklahoma Teen Drivers Ed Course</div>
-        <div class="hbar"><i id="plainbar"></i></div>
+        <div class="hbar"><i id="headbar"></i></div>
       </div>
     </div>
-    <div class="list" id="plain-list"></div>
-  </div>
-
-  <!-- pushed: rich accordion list -->
-  <div id="s-rich" class="screen">
-    <div class="detail-head">
-      <button class="back blue" onclick="pop()" aria-label="Back">
-        <svg width="11" height="18" viewBox="0 0 11 18"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9.5 1.5l-8 7.5 8 7.5"/></svg>
-      </button>
-      <div class="head-body">
-        <div class="head-eyebrow"><span class="lvl">LEVEL 1</span><span class="lbl">Getting Started</span></div>
-      </div>
+    <div class="cols">
+      <div class="rail" id="rail"></div>
+      <div class="list" id="rich-list"></div>
     </div>
-    <div class="list" id="rich-list"></div>
   </div>
 </div>
 
@@ -222,7 +199,7 @@ if (window.self !== window.top) {
 
 <div id="panel">
   <div id="panel-top">
-    <a id="back" href="../index.html">&larr; All prototypes</a>
+    <a id="back" href="/">&larr; All prototypes</a>
     <button type="button" id="copy-embed" aria-label="Copy embed code" title="Copy embed code">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
         <polyline points="9 6 3 12 9 18"></polyline>
@@ -231,8 +208,8 @@ if (window.self !== window.top) {
       </svg>
     </button>
   </div>
-  <h1>RA - Mobile Options · OPT2</h1>
-  <p class="desc">OPT2 — plain list → lesson list</p>
+  <h1>RA - Mobile Options · OPT3</h1>
+  <p class="desc">OPT3 — stepper + lesson list</p>
 </div>
 
 <script>
@@ -246,7 +223,7 @@ if (window.self !== window.top) {
   }
 
   var ceBtn = document.getElementById('copy-embed');
-  var CE_SNIPPET = '<iframe src="https://prototypes.mablahblah.com/ra-mobile-options-opt2" width="375" height="812" style="border:0" title="RA - Mobile Options · OPT2" loading="lazy"></iframe>';
+  var CE_SNIPPET = '<iframe src="https://prototypes.mablahblah.com/html-conversions/ra-prototype-set/ra-mobile-options-opt3" width="375" height="812" style="border:0" title="RA - Mobile Options · OPT3" loading="lazy"></iframe>';
 
   // the button has no text label to swap, so success briefly swaps the code
   // glyph for a tick; failure is shown by colour alone (see the CSS states above)
@@ -309,14 +286,20 @@ if (window.self !== window.top) {
   ];
   const SUBITEMS = ["Intro", "Course Elements", "Additional Resources", "Quiz"];
 
-  // plain list: 13 "Getting Started" rows; only the first advances
-  const plainEl = document.getElementById("plain-list");
-  for (let i = 0; i < 13; i++) {
-    const b = document.createElement("button");
-    b.className = "prow" + (i === 0 ? " tappable" : "");
-    b.innerHTML = `<span class="num">1</span><span class="title">Getting Started</span>`;
-    if (i === 0) b.addEventListener("click", () => push("s-rich"));
-    plainEl.appendChild(b);
+  // stepper rail 1..15
+  const rail = document.getElementById("rail");
+  rail.innerHTML = '<div class="track"></div><div class="marker" id="marker"></div>';
+  for (let i = 1; i <= 15; i++) {
+    const s = document.createElement("div");
+    s.className = "step";
+    s.innerHTML = `<span class="ring"></span><span class="n">${i}</span>`;
+    s.addEventListener("click", () => moveMarker(s));
+    rail.appendChild(s);
+  }
+  function moveMarker(step) {
+    const marker = document.getElementById("marker");
+    const ring = step.querySelector(".ring");
+    marker.style.top = (ring.offsetTop + ring.offsetHeight / 2 - 3.5) + "px";
   }
 
   // rich accordion list
@@ -342,18 +325,9 @@ if (window.self !== window.top) {
     richEl.appendChild(row);
   });
 
-  // animate the plain-list header bar on load (as in the original)
-  const plainbar = document.getElementById("plainbar");
-  requestAnimationFrame(() => { plainbar.style.width = "42%"; });
-
-  // simple screen stack
-  const stack = [];
-  function push(id) {
-    const el = document.getElementById(id);
-    el.style.zIndex = 20 + stack.length; stack.push(id);
-    requestAnimationFrame(() => el.classList.add("in"));
-  }
-  function pop() {
-    const id = stack.pop(); if (id) document.getElementById(id).classList.remove("in");
-  }
+  // place marker on step 1, animate header bar on load (as in the original)
+  requestAnimationFrame(() => {
+    moveMarker(rail.querySelectorAll(".step")[0]);
+    document.getElementById("headbar").style.width = "42%";
+  });
 </script>

@@ -13,13 +13,22 @@ Run with:  python3 -m unittest discover -s tests -v
 import sys
 import unittest
 from pathlib import Path
+from urllib.parse import urljoin
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from html_probe import lowest_common_ancestor, parse  # noqa: E402
 
-PAGES = sorted((REPO / "out" / "html-conversions").glob("*.html"))
+SITE_ROOT = REPO / "out"
+PAGES = sorted((SITE_ROOT / "html-conversions").rglob("*.html"))
+
+
+def served_target(page, href):
+    """The file a link on this page opens once the site is served from out/."""
+    url = urljoin("/" + page.relative_to(SITE_ROOT).as_posix(), href or "")
+    target = SITE_ROOT / url.lstrip("/")
+    return target / "index.html" if url.endswith("/") else target
 
 
 def page_parts(page):
@@ -46,8 +55,10 @@ class HandMadePagePanel(unittest.TestCase):
                 _, _, back, _, _, _ = page_parts(page)
 
                 self.assertIsNotNone(back, "no link back to the list")
-                # The list sits one folder above these pages.
-                self.assertEqual("../index.html", back.attrs.get("href"))
+                # However the link is written, following it from where the
+                # page is served has to land on the list at the site root.
+                self.assertEqual(SITE_ROOT / "index.html",
+                                 served_target(page, back.attrs.get("href")))
 
     def test_every_page_shows_its_own_name_as_the_heading(self):
         for page in PAGES:

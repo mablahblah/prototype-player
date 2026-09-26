@@ -3,12 +3,6 @@
   "outputDirectory": "out",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/:slug",
-      "destination": "/html-conversions/:slug"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",

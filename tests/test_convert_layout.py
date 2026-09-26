@@ -75,6 +75,22 @@ class ConvertOutputLayout(unittest.TestCase):
         self.assertIn("Demo Page", index)
         self.assertIn("ProtoPie rebuild", index)
 
+    def test_the_index_lists_hand_made_pages_kept_in_their_own_folders(self):
+        folder = Path("out/html-conversions/demo-set/demo-proto")
+        folder.mkdir(parents=True)
+        (folder / "index.html").write_text(
+            '<title>Nested Demo</title>\n'
+            '<meta name="prototype-note" content="ProtoPie rebuild">\n')
+
+        convert.convert(self.source)
+        listed = convert.write_index()
+
+        index = Path("out/index.html").read_text()
+
+        self.assertEqual(2, listed)
+        self.assertIn('href="html-conversions/demo-set/demo-proto/index.html"', index)
+        self.assertIn("Nested Demo", index)
+
 
 if __name__ == "__main__":
     unittest.main()

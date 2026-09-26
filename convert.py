@@ -36,15 +36,19 @@ def _prototype_note(html):
 
 
 def _hand_made_entries():
-    """Build index entries for out/html-conversions/*.html, found fresh each run."""
+    """Build index entries for every page under out/html-conversions/, found fresh each run.
+
+    Pages may sit at any depth, since a set of related prototypes shares a folder
+    and each prototype in it has a folder of its own.
+    """
     if not HAND_MADE.exists():
         return []
     entries = []
-    for path in sorted(HAND_MADE.glob("*.html")):
+    for path in sorted(HAND_MADE.rglob("*.html")):
         html = path.read_text()
         title = re.search(r"<title[^>]*>(.*?)</title>", html, re.IGNORECASE | re.DOTALL)
         entry = {
-            "file": f"html-conversions/{path.name}",
+            "file": path.relative_to(OUT).as_posix(),
             "name": title.group(1).strip() if title else path.stem,
         }
         note = _prototype_note(html)
