@@ -23,9 +23,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from html_probe import parse  # noqa: E402
 
-PAGES = sorted((REPO / "out" / "html-conversions").glob("*.html"))
+SITE_ROOT = REPO / "out"
+PAGES = sorted((SITE_ROOT / "html-conversions").rglob("*.html"))
 
 LIVE = "https://prototypes.mablahblah.com"
+
+
+def live_address(page):
+    """Where the live site serves this page: clean URLs drop .html, and a
+    folder's index.html is served at the folder's own address."""
+    path = page.relative_to(SITE_ROOT).with_suffix("").as_posix()
+    if path.endswith("/index"):
+        path = path[: -len("/index")]
+    return f"{LIVE}/{path}"
 
 SCRIPTS = re.compile(r"<script[^>]*>(.*?)</script>", re.DOTALL | re.IGNORECASE)
 SNIPPET = re.compile(r"'(<iframe\b[^']*)'", re.IGNORECASE)
@@ -66,8 +76,7 @@ class CopyEmbedControl(unittest.TestCase):
                 iframe = copied_snippet(page)
 
                 self.assertIsNotNone(iframe, "no embed snippet in the script")
-                # Vercel serves these with clean URLs, so no .html on the end.
-                self.assertEqual(f"{LIVE}/{page.stem}", iframe.attrs.get("src"))
+                self.assertEqual(live_address(page), iframe.attrs.get("src"))
 
     def test_the_snippet_is_sized_and_titled_for_whoever_embeds_it(self):
         for page in PAGES:
