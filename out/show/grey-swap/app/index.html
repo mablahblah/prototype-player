@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grey Swap</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header class="intro">
+        <h1>Grey swap</h1>
+        <p>
+          Three old greys sit between two steps of the new scale. Each row shows the old grey, the piece of the site
+          that uses it today, and that same piece with each of the two nearest new steps.
+        </p>
+      </header>
+
+      <section aria-labelledby="palette-heading">
+        <h2 id="palette-heading">The new greys</h2>
+        <ul class="palette" id="palette"></ul>
+      </section>
+
+      <section aria-labelledby="blue-green-heading">
+        <h2 id="blue-green-heading">Blue-green</h2>
+        <ul class="palette" id="blue-green"></ul>
+      </section>
+
+      <div id="rows"></div>
+      <div id="filter"></div>
+    </main>
+
+    <script src="icons.js"></script>
+    <script src="data.js"></script>
+    <script src="render.js"></script>
+    <script src="filter.js"></script>
+  </body>
+</html>

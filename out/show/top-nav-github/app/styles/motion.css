@@ -1,0 +1,10 @@
+:root {
+  /* Local motion tokens: hand-authored easing values, not part of the Figma
+     DLS export. Kept in their own file so the sync-dls skill never touches
+     them. */
+
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Quick UI transition duration, e.g. the nav scroll shadow */
+  --duration-fast: 200ms;
+}

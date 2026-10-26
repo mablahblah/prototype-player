@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button states</title>
+<link rel="stylesheet" href="styles/design-tokens.css">
+<link rel="stylesheet" href="styles/motion.css">
+<link rel="stylesheet" href="styles/typography.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="nav.css">
+<script src="icons.js"></script>
+<style>
+  body { margin: 0; padding: 24px; background: #ececec; font-family: system-ui, sans-serif; color: #121111; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.note { margin: 0 0 16px; font-size: 13px; color: #555; max-width: 70ch; }
+  .states { display: grid; grid-template-columns: 90px repeat(4, 90px); gap: 12px; align-items: center; background: white; padding: 16px; width: max-content; }
+  .states .hd { font-size: 12px; color: #555; }
+</style>
+</head>
+<body>
+<h1>Button states, side by side</h1>
+<p class="note">Default, hover, pressed, and focus for both icon buttons, forced on so they can be compared. Change 8: states now show in the background; the icon keeps its color. <a href="index.html">Back to the nav</a></p>
+<div class="states" id="states"></div>
+<script>
+  const states = document.getElementById('states')
+  const cols = [['', 'Default'], ['is-hover', 'Hover'], ['is-active', 'Pressed'], ['is-focus', 'Focus']]
+  states.innerHTML = '<div></div>' + cols.map(c => `<div class="hd">${c[1]}</div>`).join('')
+  for (const name of ['github', 'linkedin']) {
+    states.innerHTML += `<div class="hd">${name === 'github' ? 'GitHub' : 'LinkedIn'}</div>` +
+      cols.map(c => `<div><span class="icon-button ${name} ${c[0]}">${window.ICONS[name]}</span></div>`).join('')
+  }
+</script>
+</body>
+</html>

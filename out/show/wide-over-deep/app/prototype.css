@@ -1,0 +1,588 @@
+/* Prototype-only styles: the depth toggle, the Shallow placeholder, and the grey boxes standing in for pictures. */
+
+.depth-bar,
+.shallow-placeholder,
+.ph {
+  font-family: var(--font-family);
+}
+
+.depth-bar {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-xl, 32px) var(--spacing-m, 16px) 0;
+}
+
+.depth-toggle {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 999px;
+  background: #ececec;
+}
+
+.depth-toggle button {
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #555;
+  cursor: pointer;
+}
+
+.depth-toggle button[aria-pressed="true"] {
+  background: #fff;
+  color: #111;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.15);
+}
+
+.depth-toggle button:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+.shallow-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+  font-size: 48px;
+  font-weight: 700;
+  color: #999;
+}
+
+.ph {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #e4e4e4;
+  color: #777;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* The site's nav folds into a menu on phones using code the static copy does not carry, so on narrow screens only its Back button shows. */
+@media (max-width: 700px) {
+  header[class*="_bar_"] > :not(:first-child) {
+    display: none;
+  }
+}
+
+/* Shallow hero: title, dates and description sit at the top of the text column, with Team and Tools beneath them, all beside the image. */
+#depth-shallow ._side-by-side_teeqt_39 {
+  /* The row wraps in reverse, so flex-end is the top. */
+  align-items: flex-end;
+}
+
+#depth-shallow ._side-by-side_teeqt_39 ._content-block_teeqt_50 {
+  justify-content: flex-start;
+  gap: var(--gap-inner-section);
+}
+
+/* Shallow hero: Team and Tools are tightened to fit the text column beside the image, Team's two lists and Tools side by side, with smaller left-aligned headings and tighter rows. */
+.hero-details._details_8p83s_4 {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.hero-details._details_8p83s_4 > * {
+  grid-column: auto;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.hero-details ._heading_1pxq5_40 {
+  font-size: 18px;
+  text-align: left;
+}
+
+.hero-details ._lists_1pxq5_57 {
+  flex-direction: row;
+  gap: 16px;
+}
+
+.hero-details ._list_1pxq5_57 {
+  flex: 1 1 0;
+  gap: 8px;
+}
+
+.hero-details ._item_1fwdo_5 {
+  gap: 8px;
+  padding-inline: 0;
+}
+
+.hero-details .detail-item {
+  font-size: 14px;
+}
+
+.hero-details ._box_r3rjc_2 {
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .hero-details._details_8p83s_4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.hero-details ._box_r3rjc_2 svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Shallow: Project Goal and Key Metrics, ported from Deep's Context section, sit directly below the hero. */
+.shallow-goal {
+  margin-top: var(--gap-section);
+}
+
+/* Shallow: work beats. The section is several screens tall; its inner panel sticks under the nav while scrolling through it, and the scroll position picks which piece of work shows in the one spot. */
+.beats {
+  --nav-height: var(--size-nav, 72px);
+  position: relative;
+  margin-top: var(--gap-section);
+  height: calc(var(--beat-count) * 80vh + 20vh);
+}
+
+.beats-sticky {
+  /* Full-screen panel: edge to edge, filling the window below the nav, on a temporary grey to test the feel. Content stays within the reading width. */
+  --beats-content-width: 62.5rem;
+  position: sticky;
+  top: var(--nav-height);
+  height: calc(100vh - var(--nav-height));
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-block: 32px;
+  padding-inline: max(var(--device-padding, 16px), (100% - var(--beats-content-width)) / 2);
+  background: #efefef;
+}
+
+.beat-media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 0;
+}
+
+.beat-media .ph {
+  background: #dadada;
+}
+
+.beat-wide .ph {
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+.beat-phone .ph {
+  height: min(100%, 560px);
+  aspect-ratio: 9 / 19;
+  width: auto;
+}
+
+.beat-trio {
+  gap: 16px;
+}
+
+.beat-trio .ph {
+  flex: 1 1 0;
+  height: min(100%, 480px);
+  aspect-ratio: 9 / 19;
+  width: auto;
+  font-size: 12px;
+}
+
+.beat-stat,
+.beat-quote {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 32px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 8px;
+  height: auto;
+}
+
+.beat-stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.beat-stat-number {
+  font-family: var(--font-family);
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.beat-quote blockquote {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+
+.beats-title {
+  margin: 0;
+}
+
+/* The current piece's sub-section (01 Design Gap, 02 …) sits beside the section title and changes as the pieces do. */
+.beats-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 24px;
+  row-gap: 4px;
+}
+
+.beats-sub {
+  font-family: var(--font-family);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-brand, #e04040);
+  transition: opacity 250ms ease;
+}
+
+.beats-sub.is-changing {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beats-sub {
+    transition: none;
+  }
+}
+
+.beats-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.beat {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 32px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 400ms ease, transform 400ms ease;
+  pointer-events: none;
+}
+
+.beat.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.beat.is-past {
+  transform: translateY(-24px);
+}
+
+.beats-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.beat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d0d0d0;
+  transition: background 200ms ease;
+}
+
+.beat-dot.is-active {
+  background: #111;
+}
+
+@media (max-width: 700px) {
+  .beat {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beat,
+  .beat.is-past {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Shallow: section shortcut nav, pinned to the left edge. The current section is highlighted as you scroll, and clicking another scrolls to it. */
+.section-nav {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  font-family: var(--font-family);
+}
+
+.section-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.section-nav a {
+  display: block;
+  max-width: 160px;
+  padding: 6px 12px;
+  border-left: 2px solid #d0d0d0;
+  color: #777;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color 200ms ease, border-color 200ms ease;
+}
+
+.section-nav a:hover {
+  color: #111;
+}
+
+.section-nav a[aria-current="true"] {
+  color: #111;
+  border-left-color: var(--text-brand, #e04040);
+}
+
+.section-nav a:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+/* Narrow screens: the nav is a strip of dashes on the left edge. Each section name sits on its own see-through pill that slides out from its dash. How far the pills are out is one number, --reveal (0 closed, 1 open), so a finger drag can pull them out partway. */
+@media (max-width: 1100px) {
+  .section-nav {
+    --reveal: 0;
+    left: 0;
+    padding: 8px 28px 8px 0;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .section-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 0;
+    border-left-width: 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .section-nav-label {
+    display: block;
+    max-width: calc(var(--reveal) * 200px);
+    margin-left: calc(var(--reveal) * 6px);
+    padding: 5px calc(var(--reveal) * 12px);
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: var(--reveal);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+    transition: max-width 260ms ease, opacity 200ms ease, padding 260ms ease, margin 260ms ease;
+  }
+
+  .section-nav[data-state="opening"],
+  .section-nav[data-state="open"] {
+    --reveal: 1;
+  }
+
+  /* One name slides out on its own when scrolling reaches its section. */
+  .section-nav a.is-peek .section-nav-label {
+    max-width: 200px;
+    margin-left: 6px;
+    padding-inline: 12px;
+    opacity: 1;
+  }
+
+  /* While a finger is dragging, the pills follow it with no easing. */
+  .section-nav.is-dragging .section-nav-label {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-nav a,
+  .section-nav,
+  .section-nav-label {
+    transition: none;
+  }
+}
+
+/* Faithful pieces: the image keeps the original's aspect ratio, as large as the stage allows, with the caption beneath it as in Deep. */
+.beat.beat-stacked {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.beat-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+}
+
+.composite {
+  position: relative;
+  width: min(100cqw, 100cqh * var(--ar));
+  aspect-ratio: var(--ar);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.beat-stacked figcaption {
+  flex: 0 0 auto;
+  max-width: 62.5rem;
+}
+
+/* Side-by-side pieces (tall images): the image fills the left of the stage at its true shape, the caption sits to its right. */
+.beat.beat-side {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: center;
+}
+
+.beat-side .beat-frame {
+  height: 100%;
+}
+
+/* Measured layers: each part sits where it sits on the real page, in proportions of the whole image. */
+.cl {
+  position: absolute;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  overflow: hidden;
+  font-family: var(--font-family);
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  color: #6f6f6f;
+}
+
+.cl.ph {
+  padding: 8px;
+  border-radius: 4px;
+  background: #d2d2d2;
+}
+
+.cl-artboard {
+  background: #f8f8f8;
+  border-radius: 6px;
+}
+
+.cl-phone {
+  background: #c4c4c4;
+  border: 3px solid #8a8a8a;
+  border-radius: 12% / 5.6%;
+}
+
+.cl-desktop {
+  background: #c9c9c9;
+  border: 3px solid #8a8a8a;
+  border-radius: 10px;
+}
+
+.cl-chart {
+  background: #fff;
+}
+
+.cl-text {
+  place-items: start;
+  padding: 0;
+  text-align: left;
+  font-size: 12px;
+  color: #333;
+}
+
+.cl-text.is-strong {
+  font-weight: 700;
+}
+
+.cl-bar {
+  padding: 0;
+  border-radius: 999px;
+  background: #d6d6d6;
+}
+
+.cl-dot {
+  padding: 0;
+  border-radius: 6px;
+  background: #d6d6d6;
+}
+
+.cl-button {
+  border-radius: 999px;
+  background: #333;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Parts that sit on top of another part (the chat panel over the course page) get an edge so they read as separate. */
+.cl.ph ~ .cl.ph {
+  background: #c2c2c2;
+  box-shadow: 0 0 0 1px #9d9d9d, 0 6px 16px rgb(0 0 0 / 0.12);
+}
+
+/* Shallow: Results and What I Learned, ported from Deep as-is, scroll normally like the goal and metrics above. */
+.shallow-section {
+  margin-top: var(--gap-section);
+}
+
+/* One pinned panel holds both Foundational Work and Building Engagement. An invisible marker per chapter sits at the scroll point where that chapter's first piece shows, so the side nav can highlight and jump to each. */
+.beats-anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  top: calc((var(--at) + 0.1) / var(--beat-count) * (var(--beat-count) * 80vh - 80vh + var(--nav-height)));
+  pointer-events: none;
+}
+
+.beats-title {
+  transition: opacity 250ms ease;
+}
+
+.beats-title.is-changing {
+  opacity: 0;
+}
+
+/* Dots show only the pieces in the current chapter. */
+.beat-dot.is-other-chapter {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beats-title {
+    transition: none;
+  }
+}

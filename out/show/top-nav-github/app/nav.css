@@ -1,0 +1,389 @@
+/* Top nav prototype styles. Recreated from TopNav.module.css, NavLink.module.css,
+   BackButton.module.css, and Icon.module.css, with plain class names. The GitHub
+   button and the solid LinkedIn icon follow the Figma spec
+   (docs/features/github-link-in-top-nav/task-plans/top-nav-github-link-implementation-spec.md).
+   Forced-state classes (.is-hover, .is-active, .is-focus) let the states board show
+   every state at once. */
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url(fonts/mulish-latin-600-normal.woff2) format('woff2');
+}
+
+/* ---------- Icon ---------- */
+
+.icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-icon-default);
+  height: var(--size-icon-default);
+}
+
+.icon-intrinsic {
+  width: var(--size-icon-default);
+  height: var(--size-icon-default);
+  flex: none;
+}
+
+.icon-scalable {
+  width: 100%;
+  height: 100%;
+}
+
+/* GitHub solid draws 1px past its 32 box (Figma 1311:3867), so it must not be clipped */
+.icon-overflow {
+  overflow: visible;
+}
+
+/* ---------- Bar ---------- */
+
+/* Change 10: the bar's left/right padding is 24px on phones, 40px from 768px up.
+   --nav-padding-lr is prototype-only (net-new); Figma's --padding-nav-lr has one value. */
+:root {
+  --nav-padding-lr: var(--rel-24);
+}
+
+/* 768px */
+@media (min-width: 48rem) {
+  :root {
+    --nav-padding-lr: var(--padding-nav-lr);
+  }
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* items sit at the right; the title takes the space left of them */
+  gap: var(--gap-nav);
+  background: var(--bg-page);
+  overflow: clip;
+  padding-inline: var(--nav-padding-lr);
+  min-height: var(--size-nav);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+}
+
+.bar.scrolled {
+  box-shadow: var(--card-shadow);
+}
+
+.items {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-nav);
+  flex: none; /* the items never squish; the title gives way instead */
+}
+
+/* The docked title: fills the space between the back button and the items, stays on
+   one line, and ends in an ellipsis when crowded (change 1) */
+.title {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  align-items: center;
+}
+
+.title > span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- Nav link (Work / Resume / Contact) ---------- */
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-touch);
+  border-radius: var(--radius-button);
+  color: var(--nav-item-default);
+  text-decoration: none;
+  padding: 0 var(--padding-button-icon);
+  gap: var(--gap-button-icon);
+}
+
+.link:hover { color: var(--nav-item-hover); }
+.link:active { color: var(--nav-item-active); }
+.link:focus-visible {
+  color: var(--nav-item-focus);
+  outline: none;
+  box-shadow: var(--focus-shadow);
+}
+
+/* Change 7: selected state, from NavLink.module.css */
+.link.selected {
+  color: var(--nav-item-selected);
+  background: var(--bg-selected-nav);
+}
+
+/* ---------- Back button ---------- */
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  overflow: clip;
+  height: var(--size-touch);
+  padding-inline: var(--padding-button-icon);
+  border-radius: var(--radius-button);
+  color: var(--text-secondary);
+  background: var(--back-button-bg-default);
+  text-decoration: none;
+}
+
+.back:hover { background: var(--back-button-bg-hover); }
+.back:active { background: var(--back-button-bg-active); }
+.back:focus-visible {
+  background: var(--back-button-bg-focus);
+  outline: none;
+  box-shadow: var(--focus-shadow);
+}
+
+.back-label {
+  text-transform: uppercase;
+}
+
+/* ---------- Icon buttons (GitHub, LinkedIn) — shared box ---------- */
+
+.icon-button {
+  width: var(--size-touch);
+  height: var(--size-touch);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-button);
+  text-decoration: none;
+  flex: none;
+}
+
+.icon-button:focus-visible,
+.icon-button.is-focus {
+  outline: none;
+  box-shadow: var(--focus-shadow);
+  overflow: clip; /* Figma 1311:3843, 384:1243 */
+}
+
+/* GitHub: nav-item colors, round focus (Figma 1311:3836) */
+.github { color: var(--nav-item-default); }
+.github:hover, .github.is-hover { color: var(--nav-item-hover); }
+.github:active, .github.is-active { color: var(--nav-item-active); }
+.github:focus-visible, .github.is-focus {
+  color: var(--nav-item-focus);
+  border-radius: var(--radius-round);
+}
+
+/* LinkedIn: linked-button colors plus container opacity on hover/active (Figma 384:1236) */
+.linkedin { color: var(--linked-button-default); }
+.linkedin:hover, .linkedin.is-hover { color: var(--linked-button-hover); opacity: 0.8; }
+.linkedin:active, .linkedin.is-active { color: var(--linked-button-active); opacity: 0.5; }
+.linkedin:focus-visible, .linkedin.is-focus { color: var(--linked-button-focus); }
+
+/* ---------- Change 3: progressive collapse ----------
+   No breakpoints. index.html measures the bar and sets one of three stages:
+   .stage-full     back button and nav items show their labels
+   .stage-compact  labels hidden: back button and nav items are icon-only
+   .stage-menu     nav items, GitHub and LinkedIn move into the menu
+   The base rules above are the compact look; the stages add or remove from it. */
+
+.stage-full .link {
+  padding-left: var(--padding-button-icon);
+  padding-right: var(--padding-button-no-icon);
+}
+
+.stage-full .back {
+  padding-left: var(--padding-button-icon);
+  padding-right: var(--padding-button-no-icon);
+  gap: var(--gap-button-icon);
+}
+
+.stage-full .link .visually-hidden,
+.stage-full .back .visually-hidden {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+}
+
+.menu-button {
+  display: none;
+  margin-left: auto; /* pinned to the right edge, with or without a back button */
+  width: var(--size-touch);
+  height: var(--size-touch);
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: none;
+  color: var(--nav-item-default);
+  cursor: pointer;
+}
+
+.stage-menu .items {
+  display: none;
+}
+
+.stage-menu .menu-button {
+  display: inline-flex;
+}
+
+.menu-button:hover { color: var(--nav-item-hover); }
+.menu-button:active { color: var(--nav-item-active); }
+.menu-button:focus-visible {
+  color: var(--nav-item-focus);
+  outline: none;
+  box-shadow: var(--focus-shadow);
+}
+
+/* ---------- Change 4: slide-over reveal ----------
+   The screen (bar + page) slides left by the menu's width; the menu sits
+   underneath it at full height, pinned to the right edge. */
+
+:root {
+  --menu-width: 80vw; /* the screen slides 80% of the window width */
+}
+
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background: var(--bg-page);
+  /* Change 9: the slide and its edge shadow are animated by motion.dev in index.html */
+}
+
+/* The page can't scroll behind the open menu */
+.menu-open {
+  overflow: hidden;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0; /* 100% of the window's height */
+  width: var(--menu-width);
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  padding: calc(var(--size-nav) + var(--rel-8)) var(--rel-16) var(--rel-16);
+  background: var(--bg-page);
+  overflow-y: auto;
+}
+
+
+/* Change 6: menu rows are nav links (.link), shown in their labelled form at every
+   width, the same as the bar's full stage. GitHub and LinkedIn take the nav-item
+   colors like every other nav link. */
+.menu {
+  align-items: flex-start;
+  gap: var(--gap-line-break); /* 12px between rows */
+}
+
+.menu .link {
+  padding-left: var(--padding-button-icon);
+  padding-right: var(--padding-button-no-icon);
+}
+
+/* The LinkedIn row keeps LinkedIn's blue on its icon, state by state; its label
+   follows the nav link colors like every other row */
+.link-linkedin .icon-box { color: var(--linked-button-default); }
+.link-linkedin:hover .icon-box { color: var(--linked-button-hover); }
+.link-linkedin:active .icon-box { color: var(--linked-button-active); }
+.link-linkedin:focus-visible .icon-box { color: var(--linked-button-focus); }
+
+.menu .link .visually-hidden {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: nowrap;
+}
+
+/* The hidden attribute must win over the display rules above */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Change 5: close button ----------
+   Pinned inside the menu at the same spot the menu button occupies in the bar:
+   vertically centred in the bar's height, inset from the right by the bar's padding. */
+.menu-close {
+  display: inline-flex;
+  position: absolute;
+  top: calc((var(--size-nav) - var(--size-touch)) / 2);
+  right: var(--nav-padding-lr); /* matches the bar, so the close button lands on the menu button */
+  margin: 0;
+}
+
+/* ---------- Change 8: state by background, not by lightening ----------
+   Experiment: hover and pressed change the button's background; the icon and label
+   keep their resting color in every state. Selected keeps --bg-selected-nav.
+   Applies to every button in the bar and the menu: nav links, GitHub, LinkedIn,
+   the menu button and the close button. */
+
+:root {
+  /* Prototype-only semantic tokens (net-new): hover lighter than selected, pressed darker */
+  --nav-item-bg-hover: var(--white-95);
+  --nav-item-bg-active: var(--white-90);
+}
+
+/* Colors hold still in every state */
+.link:hover, .link:active, .link:focus-visible,
+.menu-button:hover, .menu-button:active, .menu-button:focus-visible {
+  color: var(--nav-item-default);
+}
+
+.github:hover, .github.is-hover,
+.github:active, .github.is-active,
+.github:focus-visible, .github.is-focus {
+  color: var(--nav-item-default);
+}
+
+.linkedin:hover, .linkedin.is-hover,
+.linkedin:active, .linkedin.is-active,
+.linkedin:focus-visible, .linkedin.is-focus {
+  color: var(--linked-button-default);
+  opacity: 1;
+}
+
+.link-linkedin:hover .icon-box,
+.link-linkedin:active .icon-box,
+.link-linkedin:focus-visible .icon-box {
+  color: var(--linked-button-default);
+}
+
+/* The background carries the state */
+.link:hover, .icon-button:hover, .icon-button.is-hover, .menu-button:hover {
+  background: var(--nav-item-bg-hover);
+}
+
+.link:active, .icon-button:active, .icon-button.is-active, .menu-button:active {
+  background: var(--nav-item-bg-active);
+}
+
+/* Selected keeps its own background, even under the pointer */
+.link.selected, .link.selected:hover, .link.selected:active {
+  color: var(--nav-item-selected);
+  background: var(--bg-selected-nav);
+}
+
+/* Menu rows stretch to the full width of the menu, content kept to the left */
+.menu {
+  align-items: stretch;
+}
+
+.menu .link {
+  justify-content: flex-start;
+}

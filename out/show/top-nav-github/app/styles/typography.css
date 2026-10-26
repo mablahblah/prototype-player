@@ -1,0 +1,237 @@
+:root {
+  /* Local type tokens — the brand font stack and the font weights the type
+     styles use. Not part of the Figma token export. */
+  --font-family: 'Mulish', system-ui, sans-serif;
+  /* Variable face, used only where a weight above the static cuts is needed —
+     the @fontsource cuts stop at 900. */
+  --font-family-variable: 'Mulish Variable', 'Mulish', system-ui, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  --font-weight-extrablack: 1000;
+  --font-weight-medium: 500;
+}
+
+/* Nav control label — the Top Nav items. */
+.controls-nav {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-label-mult);
+}
+
+/* Subsection heading — the docked page title in the Top Nav and case-study
+   sub-section headings. */
+.heading-subsection {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-24);
+  line-height: var(--lh-head-mult);
+}
+
+/* Hero location line — the "ATX" line in the hero. */
+.hero-2 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-label-mult);
+  letter-spacing: 0.35em;
+}
+
+/* Hero role line — the "PRODUCT DESIGNER" line in the hero. */
+.hero-3 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-24);
+  line-height: var(--lh-label-mult);
+  letter-spacing: 0.15em;
+}
+
+/* Hero tagline — the italic experience line in the hero. */
+.hero-4 {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
+  font-size: var(--font-size-12);
+  line-height: var(--lh-label-mult);
+  letter-spacing: 0.1em;
+}
+
+/* Small paragraph text — the footer tagline and small body copy. */
+.paragraph-small {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-p-mult);
+}
+
+/* Page heading — the large case study title in the hero. */
+.heading-page {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-60);
+  line-height: var(--lh-head-mult);
+}
+
+/* Project-info heading — the "Team" / "Tools" section headers. */
+.heading-project-info {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-32);
+  line-height: var(--lh-head-mult);
+}
+
+/* Section heading — the case study card title and case-study section titles. */
+.heading-section {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-40);
+  line-height: var(--lh-head-mult);
+}
+
+/* Regular paragraph text — the case study hero description. */
+.paragraph {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-20);
+  line-height: var(--lh-p-mult);
+}
+
+/* Bold paragraph text — the Caption title. */
+.paragraph-bold {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-20);
+  line-height: var(--lh-p-mult);
+}
+
+/* Small bold paragraph text — the case study hero date line and the Art Section
+   caption title. */
+.paragraph-small-bold {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-p-mult);
+}
+
+/* Image caption — the descriptive line beneath a Story Image. */
+.caption {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-p-mult);
+}
+
+/* TLDR label — the "TLDR;" line above a case study card's summary. */
+.heading-tldr-title {
+  font-family: var(--font-family-variable);
+  font-weight: var(--font-weight-extrablack);
+  font-size: var(--font-size-20);
+  line-height: var(--lh-head-mult);
+  letter-spacing: 0.2em;
+}
+
+/* TLDR paragraph — the summary itself, beneath that label. */
+.paragraph-tldr {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-style: italic;
+  font-size: var(--font-size-14);
+  line-height: var(--lh-p-mult);
+}
+
+/* Project detail item label — a Team member or Tool row. */
+.detail-item {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-p-mult);
+}
+
+/* Quote text — the large italic pull-quote body. */
+.paragraph-quote {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-style: italic;
+  font-size: var(--font-size-32);
+  line-height: var(--lh-p-mult);
+}
+
+/* Quote attribution — the italic source line under a quote. */
+.paragraph-quote-attribution {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
+  font-size: var(--font-size-24);
+  line-height: var(--lh-label-mult);
+}
+
+/* Major metric figure — the large headline stat (e.g. 15%). */
+.label-major-metric {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-60);
+  line-height: var(--lh-label-mult);
+}
+
+/* Minor metric figure — a secondary stat (e.g. 85%). */
+.label-minor-metric {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-40);
+  line-height: var(--lh-label-mult);
+}
+
+/* Comparison delta beside a metric figure (e.g. "+100%"). */
+.label-metric-comparison {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-16);
+  line-height: var(--lh-label-mult);
+}
+
+/* Change delta inside a metric's change pill (e.g. "100%"). */
+.label-metric-change {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-14);
+  line-height: var(--lh-label-mult);
+}
+
+/* Section subtitle — the italic guiding question beneath a comparison row label. */
+.paragraph-section-subtitle {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-style: italic;
+  font-size: var(--font-size-16);
+  line-height: var(--lh-p-mult);
+}
+
+/* Subsection eyebrow — the large ordinal (e.g. "01") shown above a
+   case-study sub-section heading. */
+.heading-subsection-eyebrow {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-32);
+  line-height: var(--lh-label-mult);
+}
+
+/* Inner-section heading — the project title (e.g. "Onboarding Cards") within a
+   case-study work sub-section. */
+.heading-inner-section {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-20);
+  line-height: var(--lh-head-mult);
+}
+
+/* Ghosted label reading across a coming-soon case study card. */
+.label-coming-soon-ghost {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-60);
+  line-height: var(--lh-label-mult);
+  letter-spacing: 0.1em;
+}

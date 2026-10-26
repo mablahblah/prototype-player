@@ -1,0 +1,435 @@
+:root {
+  /* Two-tier design tokens, synced from the Figma DLS export via the sync-dls
+     skill. Primitives hold raw translated values (relative scale → rem,
+     absolute scale → px, percentage scale → %); semantic tokens are var()
+     aliases to primitives. Tracked sub-groups mirror their export node in
+     full — each carries a `source =>` directive naming the node it
+     reconciles against. */
+
+  /* ==================== PRIMITIVES === */
+
+  /* = Black = */
+  /* source => primitives.color.black */
+  /* translation => rgba() */
+  --black-15: rgba(218, 216, 216, 1); /* #dad8d8ff */
+  --black-30: rgba(180, 177, 177, 1); /* #b4b1b1ff */
+  --black-60: rgba(104, 100, 100, 1); /* #686464ff */
+  --black-80: rgba(52, 50, 50, 1); /* #343232ff */
+  --black-100: rgba(18, 17, 17, 1); /* #121111ff */
+  --black-33-100: rgba(18, 17, 17, 0.33); /* #12111154 */
+  --black-66-100: rgba(18, 17, 17, 0.66); /* #121111a8 */
+  --black-10-100: rgba(18, 17, 17, 0.1); /* #1211111a */
+  --black-25-100: rgba(18, 17, 17, 0.25); /* #12111140 */
+  --black-45-100: rgba(18, 17, 17, 0.45); /* #12111173 */
+  --black-0-100: rgba(18, 17, 17, 0); /* #12111100 */
+
+  /* = White = */
+  /* source => primitives.color.white */
+  /* translation => rgba() */
+  --white-85: rgba(218, 216, 216, 1); /* #dad8d8ff */
+  --white-88: rgba(225, 224, 224, 1); /* #e1e0e0ff */
+  --white-90: rgba(230, 229, 229, 1); /* #e6e5e5ff */
+  --white-92: rgba(235, 234, 234, 1); /* #ebeaeaff */
+  --white-94: rgba(240, 239, 239, 1); /* #f0efefff */
+  --white-95: rgba(245, 245, 245, 1); /* #f5f5f5ff */
+  --white-98: rgba(250, 250, 250, 1); /* #fafafaff */
+  --white-100: rgba(255, 255, 255, 1); /* #ffffffff */
+
+  /* = Blue = */
+  /* source => primitives.color.blue */
+  /* translation => rgba() */
+  --blue-100: rgba(66, 164, 255, 1); /* #42a4ffff */
+
+  /* = LinkedIn = */
+  /* source => primitives.color.linkedin */
+  /* translation => rgba() */
+  --linkedin-brand: rgba(9, 103, 194, 1); /* #0967c2ff */
+  --linkedin-brand-lighter-1: rgba(9, 103, 194, 0.6); /* #0967c299 */
+  --linkedin-brand-lighter-2: rgba(9, 103, 194, 0.3); /* #0967c24d */
+
+  /* = Red = */
+  /* source => primitives.color.red */
+  /* translation => rgba() */
+  --red-100: rgba(229, 24, 24, 1); /* #e51818ff */
+
+  /* = Orange = */
+  /* source => primitives.color.orange */
+  /* translation => rgba() */
+  --orange-100: rgba(236, 113, 0, 1); /* #ec7100ff */
+
+  /* = Green = */
+  /* source => primitives.color.green */
+  /* translation => rgba() */
+  --green-100: rgba(15, 171, 89, 1); /* #0fab59ff */
+
+  /* = Brand = */
+  /* source => primitives.color.brand */
+  /* translation => rgba() */
+  --brand-red: rgba(230, 76, 76, 1); /* #e64c4cff */
+  --brand-blue: rgba(76, 209, 230, 1); /* #4cd1e6ff */
+  --brand-orange: rgba(230, 171, 76, 1); /* #e6ab4cff */
+  --brand-black: rgba(52, 50, 50, 1); /* #343232ff */
+
+  /* = Aceable = */
+  /* source => primitives.aceable */
+  /* translation => rgba() */
+  --aceable-shadow: rgba(33, 51, 63, 0.15); /* #21333f26 */
+
+  /* = Relative Scale = */
+  /* source => primitives.size.rel */
+  /* translation => rem */
+  --rel-0: 0; /* 0px */
+  --rel-4: 0.25rem; /* 4px */
+  --rel-8: 0.5rem; /* 8px */
+  --rel-12: 0.75rem; /* 12px */
+  --rel-16: 1rem; /* 16px */
+  --rel-24: 1.5rem; /* 24px */
+  --rel-32: 2rem; /* 32px */
+  --rel-40: 2.5rem; /* 40px */
+  --rel-44: 2.75rem; /* 44px */
+  --rel-48: 3rem; /* 48px */
+  --rel-56: 3.5rem; /* 56px */
+  --rel-60: 3.75rem; /* 60px */
+  --rel-64: 4rem; /* 64px */
+  --rel-72: 4.5rem; /* 72px */
+  --rel-80: 5rem; /* 80px */
+  --rel-100: 6.25rem; /* 100px */
+  --rel-120: 7.5rem; /* 120px */
+  --rel-140: 8.75rem; /* 140px */
+  --rel-160: 10rem; /* 160px */
+  --rel-180: 11.25rem; /* 180px */
+  --rel-200: 12.5rem; /* 200px */
+  --rel-340: 21.25rem; /* 340px */
+  --rel-380: 23.75rem; /* 380px */
+  --rel-384: 24rem; /* 384px */
+  --rel-400: 25rem; /* 400px */
+  --rel-512: 32rem; /* 512px */
+  --rel-600: 37.5rem; /* 600px */
+  --rel-999: 62.4375rem; /* 999px */
+  --rel-1000: 62.5rem; /* 1000px */
+  --rel-1200: 75rem; /* 1200px */
+  /* off-scale one-offs (custom bucket) */
+  --rel-6: 0.375rem; /* 6px */
+  --rel-55: 3.4375rem; /* 55px */
+  --rel-350: 21.875rem; /* 350px */
+  --rel-414: 25.875rem; /* 414px */
+
+  /* = Absolute Scale = */
+  /* source => primitives.size.abs */
+  /* translation => px */
+  --abs-4: 4px; /* 4px */
+  --abs-12: 12px; /* 12px */
+  --abs-16: 16px; /* 16px */
+  --abs-24: 24px; /* 24px */
+  --abs-32: 32px; /* 32px */
+  --abs-40: 40px; /* 40px */
+  --abs-44: 44px; /* 44px */
+  --abs-64: 64px; /* 64px */
+  --abs-72: 72px; /* 72px */
+  --abs-80: 80px; /* 80px */
+  --abs-200: 200px; /* 200px */
+  --abs-999: 999px; /* 999px */
+  /* off-scale one-offs (custom bucket) */
+  --abs-3: 3px; /* 3px */
+  --abs-14: 14px; /* 14px */
+  --abs-414: 414px; /* 414px */
+  --abs-500: 500px; /* 500px */
+  --abs-575: 575px; /* 575px */
+  --abs-700: 700px; /* 700px */
+
+  /* = Percentage Scale = */
+  /* source => primitives.size.perc.custom */
+  /* translation => % */
+  --perc-20: 20%; /* 20 */
+  --perc-25: 25%; /* 25 */
+  --perc-31: 31%; /* 31 */
+
+  /* = Settings = */
+  /* source => primitives.settings */
+  /* translation => 0-1 fraction */
+  --settings-disabled-card-opacity: 0.6; /* 60 */
+
+  /* ==================== STRUCTURE === */
+
+  /* = Relative Size = */
+  /* source => structure.rel.size */
+  --size-nav: var(--rel-72); /* {primitives.size.rel.72} */
+  --size-icon-default: var(--rel-32); /* {primitives.size.rel.32} */
+  --size-2-3-col-min-width: var(--rel-350); /* {primitives.size.rel.custom.350} */
+  --mocks-phone-max: var(--rel-350); /* {primitives.size.rel.custom.350} */
+  --mocks-phone-min: var(--rel-120); /* {primitives.size.rel.120} */
+  --mocks-design-min-story: var(--rel-380); /* {primitives.size.rel.380} */
+  --mocks-design-min-work: var(--rel-200); /* {primitives.size.rel.200} */
+  --size-icon-small: var(--rel-24); /* {primitives.size.rel.24} */
+  --size-icon-large: var(--rel-40); /* {primitives.size.rel.40} */
+
+  /* = Absolute Size = */
+  /* source => structure.abs.size */
+  --size-touch: var(--abs-44); /* {primitives.size.abs.44} */
+  --size-nav-title-height: var(--abs-32); /* {primitives.size.abs.32} */
+  --size-artboard-inset: var(--abs-14); /* {primitives.size.abs.custom.14} */
+  --size-hl-rule-width: var(--abs-3); /* {primitives.size.abs.custom.3} */
+
+  /* = Video Button Width = */
+  /* source => structure.perc.video-button-width */
+  --video-button-width-default: var(--perc-25); /* {primitives.size.perc.custom.25} */
+  --video-button-width-active: var(--perc-20); /* {primitives.size.perc.custom.20} */
+  --video-button-width-release: var(--perc-31); /* {primitives.size.perc.custom.31} */
+
+  /* = Radius = */
+  /* source => structure.rel.radius */
+  --radius-button: var(--rel-12); /* {primitives.size.rel.12} */
+  --radius-round: var(--rel-999); /* {primitives.size.rel.999} */
+  --radius-chart: var(--rel-24); /* {primitives.size.rel.24} */
+  --radius-card: var(--rel-24); /* {primitives.size.rel.24} */
+
+  /* = Gap = */
+  /* source => structure.rel.gap */
+  --gap-nav: var(--rel-24); /* {primitives.size.rel.24} */
+  --gap-caption: var(--rel-32); /* {primitives.size.rel.32} */
+  --gap-line-break: var(--rel-12); /* {primitives.size.rel.12} */
+  --gap-p-break: var(--rel-32); /* {primitives.size.rel.32} */
+  --gap-button-icon: var(--rel-4); /* {primitives.size.rel.4} */
+  --gap-bullet: var(--rel-16); /* {primitives.size.rel.16} */
+  --gap-word-space: var(--rel-4); /* {primitives.size.rel.4} */
+  --gap-image-list: var(--rel-40); /* {primitives.size.rel.40} */
+  --gap-letter-space: var(--rel-0); /* {primitives.size.rel.0} */
+
+  /* = Padding = */
+  /* source => structure.rel.padding */
+  --padding-example-image: var(--rel-40); /* {primitives.size.rel.40} */
+  --padding-button-no-icon: var(--rel-16); /* {primitives.size.rel.16} */
+  --padding-button-icon: var(--rel-8); /* {primitives.size.rel.8} */
+  --padding-nav-lr: var(--rel-40); /* {primitives.size.rel.40} */
+  --padding-comparison-push: var(--rel-6); /* {primitives.size.rel.custom.6} */
+  --padding-pill-lr: var(--rel-6); /* {primitives.size.rel.custom.6} */
+  --padding-pill-tb: var(--rel-4); /* {primitives.size.rel.4} */
+
+  /* ==================== COLORS === */
+
+  /* = Bg = */
+  /* source => colors.bg */
+  --bg-page: var(--white-100); /* {primitives.color.white.100} */
+  --bg-selected-nav: var(--black-10-100); /* {primitives.color.black.10-100} */
+  --bg-work: var(--white-95); /* {primitives.color.white.95} */
+  --bg-callout: var(--white-98); /* {primitives.color.white.98} */
+  --bg-footer: var(--white-95); /* {primitives.color.white.95} */
+  --bg-resume: var(--white-98); /* {primitives.color.white.98} */
+  --bg-artboard: var(--white-98); /* {primitives.color.white.98} */
+  --bg-positive-pill: var(--green-100); /* {primitives.color.green.100} */
+  --bg-chart: var(--white-98); /* {primitives.color.white.98} */
+
+  /* = Text = */
+  /* source => colors.text */
+  --text-primary: var(--black-100); /* {primitives.color.black.100} */
+  --text-link: var(--blue-100); /* {primitives.color.blue.100} */
+  --text-secondary: var(--black-60); /* {primitives.color.black.60} */
+  --text-brand: var(--brand-red); /* {primitives.color.brand.red} */
+  --text-neg-validation: var(--red-100); /* {primitives.color.red.100} */
+  --text-warn-validation: var(--orange-100); /* {primitives.color.orange.100} */
+  --text-posi-validation: var(--green-100); /* {primitives.color.green.100} */
+  --text-quote: var(--black-60); /* {primitives.color.black.60} */
+  --text-tertiary: var(--black-30); /* {primitives.color.black.30} */
+  --text-reverse: var(--white-100); /* {primitives.color.white.100} */
+
+  /* = Card Bg = */
+  /* source => colors.control.card-bg */
+  --card-bg-default-top-left: var(--white-98); /* {primitives.color.white.98} */
+  --card-bg-default-bottom-right: var(--white-94); /* {primitives.color.white.94} */
+  --card-bg-hover: var(--white-92); /* {primitives.color.white.92} */
+  --card-bg-active: var(--white-88); /* {primitives.color.white.88} */
+  --card-bg-focus: var(--white-95); /* {primitives.color.white.95} */
+  --card-bg-disabled: var(--white-94); /* {primitives.color.white.94} */
+
+  /* = Back Button Bg = */
+  /* source => colors.control.back-button-bg */
+  --back-button-bg-default: var(--white-95); /* {primitives.color.white.95} */
+  --back-button-bg-hover: var(--white-90); /* {primitives.color.white.90} */
+  --back-button-bg-active: var(--white-85); /* {primitives.color.white.85} */
+  --back-button-bg-focus: var(--white-95); /* {primitives.color.white.95} */
+
+  /* = Nav Item = */
+  /* source => colors.control.nav-item */
+  --nav-item-default: var(--black-100); /* {primitives.color.black.100} */
+  --nav-item-hover: var(--black-60); /* {primitives.color.black.60} */
+  --nav-item-active: var(--black-30); /* {primitives.color.black.30} */
+  --nav-item-focus: var(--black-100); /* {primitives.color.black.100} */
+  --nav-item-selected: var(--black-100); /* {primitives.color.black.100} */
+
+  /* = Linked Button = */
+  /* source => colors.control.linked-button */
+  --linked-button-default: var(--linkedin-brand); /* {primitives.color.linkedin.brand} */
+  --linked-button-hover: var(--linkedin-brand-lighter-1); /* {primitives.color.linkedin.brand-lighter-1} */
+  --linked-button-active: var(--linkedin-brand-lighter-2); /* {primitives.color.linkedin.brand-lighter-2} */
+  --linked-button-focus: var(--linkedin-brand); /* {primitives.color.linkedin.brand} */
+
+  /* = Video Controls = */
+  /* source => colors.control.video-controls */
+  --video-controls-default: var(--black-66-100); /* {primitives.color.black.66-100} */
+  --video-controls-hover: var(--black-100); /* {primitives.color.black.100} */
+  --video-controls-active: var(--black-100); /* {primitives.color.black.100} */
+  --video-controls-focus: var(--black-100); /* {primitives.color.black.100} */
+  --video-controls-selected: var(--black-0-100); /* {primitives.color.black.0-100} */
+
+  /* = Solid Button = */
+  /* source => colors.control.solid-button */
+  --solid-button-default: var(--black-100); /* {primitives.color.black.100} */
+  --solid-button-hover: var(--black-60); /* {primitives.color.black.60} */
+  --solid-button-active: var(--black-30); /* {primitives.color.black.30} */
+  --solid-button-focus: var(--black-100); /* {primitives.color.black.100} */
+  --solid-button-selected: var(--black-100); /* {primitives.color.black.100} */
+
+  /* = UI = */
+  /* source => colors.ui */
+  --ui-caption-pointer: var(--black-30); /* {primitives.color.black.30} */
+  --ui-artboard-edge: var(--black-10-100); /* {primitives.color.black.10-100} */
+  --ui-focus-color: var(--blue-100); /* {primitives.color.blue.100} */
+  --ui-highlight: var(--brand-red); /* {primitives.color.brand.red} */
+  --ui-divider: var(--black-10-100); /* {primitives.color.black.10-100} */
+  --ui-lt-drop-shadow: var(--black-10-100); /* {primitives.color.black.10-100} */
+  --ui-dk-drop-shadow: var(--black-25-100); /* {primitives.color.black.25-100} */
+  --ui-chart-line: var(--brand-blue); /* {primitives.color.brand.blue} */
+
+  /* ==================== EFFECT === */
+
+  /* = Shadow = */
+  /* Hand-assembled box-shadow strings — the export stores these as composite
+     custom-shadow objects (offset/blur/spread/color) that derive.mjs cannot
+     translate; the color part references the matching colors.ui semantic, or the
+     primitive itself where the export holds no semantic for it. */
+  /* source => effect */
+  --focus-shadow: 0 0 0 0.125rem var(--ui-focus-color); /* effect.focus-shadow */
+  /* The focus ring's thickness, for the two prototype phone buttons that draw
+     it as an outline instead of this box-shadow. No Figma source: the export
+     keeps this as part of the focus effect object, not a variable of its own. */
+  --focus-shadow-width: 0.125rem;
+  --card-shadow: 0 1.875rem 1.875rem -1.875rem var(--ui-dk-drop-shadow); /* effect.card-shadow */
+  --card-shadow-press: 0 1.25rem 1.25rem -1.25rem var(--ui-dk-drop-shadow); /* effect.card-shadow-press */
+  --mockup-shadow: 0 0 1.875rem var(--ui-lt-drop-shadow); /* effect.mockup-shadow */
+  --device-shadow: 0 0.625rem 6.25rem var(--ui-lt-drop-shadow); /* effect.device-shadow */
+  /* Resting end of the prototype phone's two lift animations — the device
+     shadow at no opacity, so it fades in and out instead of growing from a
+     point. No Figma source: a fully transparent effect style is an animation
+     state, not a design value. */
+  --device-shadow-off: 0 0.625rem 6.25rem var(--black-0-100);
+  --aceable-floating: 0 0.375rem 0.625rem var(--aceable-shadow); /* effect.aceable-floating */
+
+  /* ==================== TYPOGRAPHY === */
+
+  /* = Font Size = */
+  /* source => typography.font-size */
+  /* translation => rem */
+  --font-size-12: 0.75rem; /* 12px */
+  --font-size-14: 0.875rem; /* 14px */
+  --font-size-16: 1rem; /* 16px */
+  --font-size-20: 1.25rem; /* 20px */
+  --font-size-24: 1.5rem; /* 24px */
+  --font-size-32: 2rem; /* 32px */
+  --font-size-40: 2.5rem; /* 40px */
+  --font-size-60: 3.75rem; /* 60px */
+
+  /* = Line Height = */
+  /* One unitless multiplier per line-height scale. The export stores line-height
+     as per-size px values; the CSS model is font-size × multiplier, so only the
+     `.mult` leaf of each scale is materialized (derive.mjs is not used here). */
+  /* source => typography.line-height */
+  /* translation => unitless (multiplier) */
+  --lh-p-mult: 1.6; /* paragraph */
+  --lh-head-mult: 1.1; /* headings */
+  --lh-label-mult: 1; /* labels: line-height = font size */
+  --lh-xl-mult: 1.8; /* xl */
+
+  /* ==================== RESPONSIVENESS === */
+
+  /* = Layout = */
+  /* Responsive layout metrics from the Responsiveness collection's four variable
+     modes: a Phone base here, with Tablet/Desktop/XL min-width overrides below.
+     The breakpoint thresholds are ours; the mode values are synced.
+     max-content-width, xl-max-content-width, and xl-desktop-abs-max are
+     intentionally not synced — each is derived from device-padding in base.css
+     (Figma can only snapshot the calc, and its snapshot goes stale).
+     max-phone-width caps an image, so it aliases the abs scale (px);
+     rem would let zoom scale it past the image's resolution and blur it. */
+  /* source => responsiveness */
+  --device-padding: var(--rel-24); /* 24px — phone (base) */
+  --card-padding: var(--rel-24); /* 24px — phone (base) */
+  --cs-card-padding-lr: var(--rel-24); /* 24px — phone (base) */
+  --cs-card-padding-tb: var(--rel-24); /* 24px — phone (base) */
+  --gap-page: var(--rel-140); /* 140px — phone (base) */
+  --gap-section: var(--rel-100); /* 100px — phone (base) */
+  --gap-inner-section: var(--rel-60); /* 60px — phone (base) */
+  --gap-grid-spacing: var(--rel-32); /* 32px — phone (base) */
+  --grid-col-min: var(--rel-200); /* 200px — all breakpoints; grid-agnostic column floor, shared by every constraint */
+  --constraint-1-3-col-max: var(--rel-350); /* 350px — phone (base) */
+  --constraint-1-2-col-max: var(--rel-350); /* 350px — phone (base) */
+  --constraint-2-3-col-max: var(--rel-350); /* 350px — phone (base) */
+  --max-phone-width: var(--abs-414); /* 414px — phone image cap */
+  --min-content-width: var(--rel-414); /* 414px — content column floor */
+  --caption-max-width: var(--rel-414); /* 414px — phone (base) */
+  --top-align-img-pad: var(--rel-40); /* 40px — phone (base) */
+  --case-study-card-height: var(--rel-512); /* 512px — the Virtual Instructor card's image slot (phone/tablet, where the card hugs its content) */
+
+  /* ==================== STYLE === */
+
+  /* = Opacity = */
+  /* source => style.disabled */
+  --disabled-card-opacity: var(--settings-disabled-card-opacity); /* {primitives.settings.disabled-card-opacity} */
+
+  /* = Multipliers = */
+  /* Unitless scale multipliers that enlarge a case-study montage image inside its
+     fixed-size slot on the home page, without changing the layout around it. */
+  /* source => style.multipliers */
+  /* translation => unitless */
+  --multipliers-fc-cs-img: 1.15; /* {style.multipliers.fc-cs-img} */
+  --multipliers-js-cs-img: 1.15; /* {style.multipliers.js-cs-img} */
+}
+
+/* Responsive overrides — see the RESPONSIVENESS group. */
+@media (min-width: 48rem) {
+  /* 768px — tablet */
+  :root {
+    --device-padding: var(--rel-32);
+    --card-padding: var(--rel-32);
+    --cs-card-padding-lr: var(--rel-32);
+    --cs-card-padding-tb: var(--rel-12);
+    --caption-max-width: var(--rel-200);
+    --gap-page: var(--rel-160);
+    --gap-section: var(--rel-120);
+    --gap-inner-section: var(--rel-80);
+    --top-align-img-pad: var(--rel-0);
+    --constraint-1-3-col-max: var(--rel-384); /* 384px — tablet */
+    --constraint-1-2-col-max: var(--rel-384); /* 384px — tablet */
+    --constraint-2-3-col-max: var(--rel-384); /* 384px — tablet */
+  }
+}
+@media (min-width: 64rem) {
+  /* 1024px — desktop */
+  :root {
+    --device-padding: var(--rel-40);
+    --card-padding: var(--rel-40);
+    --cs-card-padding-lr: var(--rel-40);
+    --cs-card-padding-tb: var(--rel-16);
+    --gap-grid-spacing: var(--rel-48);
+    --constraint-1-3-col-max: var(--rel-400); /* 400px — desktop */
+    --constraint-1-2-col-max: var(--rel-600); /* 600px — desktop */
+    --constraint-2-3-col-max: var(--rel-600); /* 600px — desktop */
+    --case-study-card-height: var(--abs-575); /* 575px — the card's own height (desktop/XL) */
+  }
+}
+@media (min-width: 85.375rem) {
+  /* 1366px — XL desktop */
+  :root {
+    --device-padding: var(--rel-80);
+    --card-padding: var(--rel-60);
+    --cs-card-padding-lr: var(--rel-60);
+    --cs-card-padding-tb: var(--rel-24); /* back to the phone value */
+    --caption-max-width: var(--rel-414);
+    --gap-page: var(--rel-200);
+    --gap-section: var(--rel-140);
+    --gap-inner-section: var(--rel-100);
+    --gap-grid-spacing: var(--rel-64);
+    --constraint-1-3-col-max: var(--rel-600); /* 600px — XL desktop */
+    --constraint-1-2-col-max: var(--rel-1000); /* 1000px — XL desktop */
+    --constraint-2-3-col-max: var(--rel-1200); /* 1200px — XL desktop */
+  }
+}
