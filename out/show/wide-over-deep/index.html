@@ -1,0 +1,153 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wide Over Deep</title>
+<meta name="prototype-note" content="React prototype">
+<script>
+// An embedded preview is the site and nothing else: no window, no panel.
+if (window.self !== window.top) document.documentElement.className += ' embedded';
+</script>
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: flex; flex-wrap: wrap; gap: 24px;
+    align-items: center; justify-content: center; padding: 30px;
+    background: #16171a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* the window takes every bit of width the panel leaves, so the site inside
+     lays itself out as it would in a browser that size */
+  #window {
+    flex: 1 1 720px; max-width: 1600px; height: calc(100vh - 60px); min-height: 480px;
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 10px; background: #fff;
+    box-shadow: 0 24px 70px rgba(0,0,0,.55);
+  }
+  #bar {
+    flex: none; height: 34px; display: flex; align-items: center; gap: 7px;
+    padding: 0 12px; background: #24262b;
+  }
+  #bar i { flex: none; width: 11px; height: 11px; border-radius: 50%; background: #3a3d44; }
+  #bar .addr {
+    flex: 1; height: 20px; margin: 0 60px 0 18px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    background: #1a1c20; color: #8b8f98; font-size: 11px;
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  }
+  #site { flex: 1; display: block; width: 100%; border: 0; background: #fff; }
+
+  /* embed mode: the frame holds the site and nothing else, at any size */
+  html.embedded body { padding: 0; display: block; background: transparent; }
+  html.embedded #window {
+    height: 100vh; min-height: 0; max-width: none;
+    border-radius: 0; box-shadow: none;
+  }
+  html.embedded #bar, html.embedded #panel { display: none; }
+
+  #panel {
+    flex: none; width: 210px; max-width: 90vw;
+    color: #8b8f98; font-size: 12px;
+  }
+  /* back link and icon button share one row, pinned to opposite edges */
+  #panel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  #back {
+    display: inline-block; padding: 6px 11px 6px 8px;
+    border-radius: 7px; background: #24262b; color: #c8ccd4;
+    text-decoration: none;
+  }
+  #back:hover { background: #2e3138; color: #fff; }
+  #panel h1 { font-size: 13px; color: #e6e8ec; margin: 0 0 4px; font-weight: 600; }
+  #panel p { margin: 0; line-height: 1.5; }
+  #copy-embed {
+    display: inline-flex; align-items: center; justify-content: center;
+    flex: 0 0 auto; width: 28px; height: 28px; padding: 0;
+    border: 1px solid #33363d; border-radius: 7px; background: #1e2023;
+    color: #b9bdc4; cursor: pointer;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  }
+  #copy-embed svg { display: block; }
+  #copy-embed:hover { background: #26292e; color: #e7e8ea; }
+  #copy-embed[data-ce-state="done"] { background: #204a3f; color: #7fd9b9; border-color: #2c5c4d; }
+  #copy-embed[data-ce-state="error"] { background: #4a2020; color: #e29a9a; border-color: #5c2c2c; }
+</style>
+
+<div id="window">
+  <div id="bar"><i></i><i></i><i></i><span class="addr">Wide Over Deep</span></div>
+  <iframe id="site" src="/show/wide-over-deep/app/" title="Wide Over Deep"></iframe>
+</div>
+
+<div id="panel">
+  <div id="panel-top">
+    <a id="back" href="/">&larr; All prototypes</a>
+    <button type="button" id="copy-embed" aria-label="Copy embed code" title="Copy embed code">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <polyline points="9 6 3 12 9 18"></polyline>
+        <line x1="14" y1="4" x2="10" y2="20"></line>
+        <polyline points="15 6 21 12 15 18"></polyline>
+      </svg>
+    </button>
+  </div>
+  <h1>Wide Over Deep</h1>
+  <p class="desc"></p>
+</div>
+
+<script>
+(function () {
+  // inside someone else's iframe, the panel has no job to do
+  if (window.self !== window.top) return;
+
+  var ceBtn = document.getElementById('copy-embed');
+  var CE_SNIPPET = "<iframe src=\"https://prototypes.mablahblah.com/show/wide-over-deep\" width=\"100%\" height=\"800\" style=\"border:0\" title=\"Wide Over Deep\" loading=\"lazy\"><\/iframe>";
+
+  // the button has no text label to swap, so success briefly swaps the code
+  // glyph for a tick; failure is shown by colour alone (see the CSS states above)
+  var CE_ICON_DEFAULT = ceBtn.innerHTML;
+  var CE_ICON_CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+  var ceResetTimer = null;
+  function ceShowState(state) {
+    clearTimeout(ceResetTimer);
+    ceBtn.dataset.ceState = state;
+    ceBtn.innerHTML = state === 'done' ? CE_ICON_CHECK : CE_ICON_DEFAULT;
+    ceResetTimer = setTimeout(function () {
+      delete ceBtn.dataset.ceState;
+      ceBtn.innerHTML = CE_ICON_DEFAULT;
+    }, 1800);
+  }
+
+  function ceFallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    ta.style.left = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  ceBtn.addEventListener('click', function () {
+    function finish(ok) {
+      ceShowState(ok ? 'done' : 'error');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(CE_SNIPPET).then(
+        function () { finish(true); },
+        function () { finish(ceFallbackCopy(CE_SNIPPET)); }
+      );
+    } else {
+      finish(ceFallbackCopy(CE_SNIPPET));
+    }
+  });
+})();
+</script>

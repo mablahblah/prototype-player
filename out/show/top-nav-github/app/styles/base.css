@@ -1,0 +1,93 @@
+/* Base element styles: resets and defaults, built on design tokens. */
+
+:root {
+  /* Local stacking token for the sticky top nav (not Figma-sourced). */
+  --z-nav: 100;
+
+  /* An open prototype covers the whole screen, the nav included, so a visitor
+     reaching to close it cannot hit a nav link instead. Both stand above the
+     nav by relation rather than by a number of their own, so moving the nav
+     carries them with it. Not Figma-sourced. */
+  --z-takeover-mask: calc(var(--z-nav) + 10);
+  --z-takeover-device: calc(var(--z-nav) + 20);
+
+  /* Max content width: our 1000px column plus the responsive device-padding gutters. Self-derived, not from Figma. */
+  --max-content-width: calc(62.5rem + 2 * var(--device-padding)); /* 1000px + 2 × device-padding */
+
+  /* Wide content width for blocks that exceed the readable text column (e.g. the prototype grid): a 1200px column plus the same responsive gutters. Self-derived, not from Figma. */
+  --xl-max-content-width: calc(75rem + 2 * var(--device-padding)); /* 1200px + 2 × device-padding */
+
+  /* Absolute max content width for ultra-wide XL desktop: a 2000px column plus the same responsive gutters. Self-derived, not from Figma. */
+  --xl-desktop-abs-max: calc(125rem + 2 * var(--device-padding)); /* 2000px + 2 × device-padding */
+
+  /* How much of the screen's height a picture may fill. Every picture is held
+     within it except the two long flow diagrams, which opt out. The designer
+     set 80% on 2026-09-05, kept in one place so changing it later does not
+     mean hunting it down. svh measures the screen with the address bar
+     showing. dvh grows as that bar slides away, which was seen resizing a
+     picture mid-scroll on a real phone. Self-derived, not from Figma. */
+  --image-max-height: 80svh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+/* Headings and paragraphs carry no default margin — spacing is owned by layout (flex gap) and tokens. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+/* Inline emphasis in prose renders at the heaviest weight. The resume scopes
+   its own strong weight under .resume-root, so this doesn't reach it. */
+strong {
+  font-weight: var(--font-weight-black);
+}
+
+/* Visually hidden: removed from view but kept in the DOM and the accessibility
+   tree so screen readers still announce it. Components that reveal the content
+   at a breakpoint reset these properties in their own media query. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Stacks a phone mock and its optional caption in a centered column. Used by
+   VideoPhone and PrototypePhone. */
+.phone-mock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-line-break);
+  width: 100%;
+}
+
+/* Caption beside a phone mock in VideoPhone and PrototypePhone, which each
+   place it above or below. Type comes from the global .heading-inner-section
+   class; only color and layout live here. */
+.phone-mock-caption {
+  color: var(--text-secondary);
+  text-align: center;
+  width: 100%;
+}

@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype: top-nav-github</title>
+<link rel="stylesheet" href="styles/design-tokens.css">
+<link rel="stylesheet" href="styles/motion.css">
+<link rel="stylesheet" href="styles/typography.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="nav.css">
+<script src="icons.js"></script>
+<!-- motion.dev 13.1.1 (MIT), copied from node_modules so the prototype stays self-contained -->
+<script src="vendor/motion.js"></script>
+<style>
+  body { margin: 0; background: var(--bg-page); }
+  main { padding: 48px var(--padding-nav-lr); font-family: var(--font-family); color: var(--text-primary); }
+  main h1 { font-size: 32px; margin: 0 0 12px; }
+  main p { margin: 0 0 12px; max-width: 60ch; color: var(--text-secondary); }
+  .filler-section { margin-top: 48px; }
+  .filler-section h2 { font-size: 24px; margin: 0 0 12px; }
+  .filler-image { height: 240px; margin-top: 16px; border-radius: 12px; background: var(--back-button-bg-default); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 14px; }
+  .proto-note { position: fixed; right: 12px; bottom: 12px; font: 12px system-ui, sans-serif; background: #121111; color: white; padding: 8px 10px; border-radius: 8px; opacity: 0.85; }
+  .proto-note a { color: #9fd0ff; }
+</style>
+</head>
+<body>
+<!-- One page that simulates two views of the site. Home: no back button, no title.
+     Sub-page: back button plus the page title in the bar. Clicking any nav item
+     opens its sub-page; Back returns home. The view lives in the URL hash, so
+     reloading keeps it. -->
+<!-- Change 4: the screen (bar + page) slides left to reveal the menu underneath it. -->
+<div class="screen" id="screen">
+<header class="bar" id="bar">
+  <a class="back" href="#" title="Back" data-go="home"><span data-icon="back"></span><span class="visually-hidden back-label controls-nav">Back</span></a>
+  <div class="title"><span class="heading-subsection" id="title">Virtual Instructor</span></div>
+  <div class="items">
+    <a class="link" href="#" data-go="sub" data-title="Work"><span data-icon="work"></span><span class="visually-hidden controls-nav">Work</span></a>
+    <a class="link" href="#" data-go="sub" data-title="Resume"><span data-icon="resume"></span><span class="visually-hidden controls-nav">Resume</span></a>
+    <a class="link" href="#" data-go="sub" data-title="Contact"><span data-icon="contact"></span><span class="visually-hidden controls-nav">Contact</span></a>
+    <a class="icon-button github" href="#" data-go="sub" data-title="GitHub" title="GitHub"><span data-icon="github"></span><span class="visually-hidden">GitHub (opens in new tab)</span></a>
+    <a class="icon-button linkedin" href="#" data-go="sub" data-title="LinkedIn" title="LinkedIn"><span data-icon="linkedin"></span><span class="visually-hidden">LinkedIn (opens in new tab)</span></a>
+  </div>
+  <!-- Change 2: menu button, shown only once the items no longer fit. Icon: Figma Icon=Menu, Line (1317:4190). -->
+  <button class="menu-button" type="button" aria-expanded="false" aria-controls="menu" title="Menu">
+    <span class="icon-box" aria-hidden="true"><svg viewBox="0 0 32 32" class="icon-intrinsic" preserveAspectRatio="xMidYMid meet"><path d="M18 15.5C18 15.7967 17.912 16.0867 17.7472 16.3334C17.5824 16.58 17.3481 16.7723 17.074 16.8858C16.7999 16.9994 16.4983 17.0291 16.2074 16.9712C15.9164 16.9133 15.6491 16.7704 15.4393 16.5607C15.2296 16.3509 15.0867 16.0836 15.0288 15.7926C14.9709 15.5017 15.0006 15.2001 15.1142 14.926C15.2277 14.6519 15.42 14.4176 15.6666 14.2528C15.9133 14.088 16.2033 14 16.5 14C16.8978 14 17.2794 14.158 17.5607 14.4393C17.842 14.7207 18 15.1022 18 15.5ZM16.5 8.50001C16.7967 8.50001 17.0867 8.41204 17.3334 8.24721C17.58 8.08239 17.7723 7.84812 17.8858 7.57403C17.9994 7.29994 18.0291 6.99834 17.9712 6.70737C17.9133 6.4164 17.7704 6.14913 17.5607 5.93935C17.3509 5.72957 17.0836 5.58671 16.7926 5.52883C16.5017 5.47095 16.2001 5.50066 15.926 5.61419C15.6519 5.72772 15.4176 5.91998 15.2528 6.16665C15.088 6.41333 15 6.70334 15 7.00001C15 7.39783 15.158 7.77936 15.4393 8.06067C15.7206 8.34197 16.1022 8.50001 16.5 8.50001ZM16.5 22.5C16.2033 22.5 15.9133 22.588 15.6666 22.7528C15.42 22.9176 15.2277 23.1519 15.1142 23.426C15.0006 23.7001 14.9709 24.0017 15.0288 24.2926C15.0867 24.5836 15.2296 24.8509 15.4393 25.0607C15.6491 25.2704 15.9164 25.4133 16.2074 25.4712C16.4983 25.5291 16.7999 25.4994 17.074 25.3858C17.3481 25.2723 17.5824 25.08 17.7472 24.8334C17.912 24.5867 18 24.2967 18 24C18 23.6022 17.842 23.2207 17.5607 22.9393C17.2794 22.658 16.8978 22.5 16.5 22.5Z" fill="currentColor"></path></svg></span>
+    <span class="visually-hidden">Menu</span>
+  </button>
+</header>
+
+<main>
+  <h1 id="page-heading">Home</h1>
+  <p id="page-copy"></p>
+  <!-- Filler so the page scrolls: shows the bar's scrolled state and how the menu opens from mid-page -->
+  <div id="filler"></div>
+</main>
+</div>
+<!-- The menu: every row is a nav link (change 6), label always shown. Full height, underneath the screen, revealed when the screen slides away (change 4). -->
+<nav class="menu" id="menu" aria-label="Site" inert>
+  <!-- Change 5: the close button sits exactly where the menu button was before the screen slid. Icon: Figma Icon=Close, Line (1319:4248). -->
+  <button class="menu-button menu-close" type="button" title="Close menu">
+    <span class="icon-box" aria-hidden="true"><svg viewBox="0 0 32 32" class="icon-intrinsic" preserveAspectRatio="xMidYMid meet"><path d="M26.2075 23.7925C26.3004 23.8854 26.3741 23.9957 26.4244 24.1171C26.4747 24.2385 26.5006 24.3686 26.5006 24.5C26.5006 24.6314 26.4747 24.7615 26.4244 24.8829C26.3741 25.0043 26.3004 25.1146 26.2075 25.2075C26.1146 25.3004 26.0043 25.3741 25.8829 25.4244C25.7615 25.4747 25.6314 25.5006 25.5 25.5006C25.3686 25.5006 25.2385 25.4747 25.1171 25.4244C24.9957 25.3741 24.8854 25.3004 24.7925 25.2075L16.5 16.9137L8.2075 25.2075C8.01986 25.3951 7.76536 25.5006 7.5 25.5006C7.23464 25.5006 6.98014 25.3951 6.7925 25.2075C6.60486 25.0199 6.49944 24.7654 6.49944 24.5C6.49944 24.2346 6.60486 23.9801 6.7925 23.7925L15.0862 15.5L6.7925 7.2075C6.60486 7.01986 6.49944 6.76536 6.49944 6.5C6.49944 6.23464 6.60486 5.98014 6.7925 5.7925C6.98014 5.60486 7.23464 5.49944 7.5 5.49944C7.76536 5.49944 8.01986 5.60486 8.2075 5.7925L16.5 14.0863L24.7925 5.7925C24.9801 5.60486 25.2346 5.49944 25.5 5.49944C25.7654 5.49944 26.0199 5.60486 26.2075 5.7925C26.3951 5.98014 26.5006 6.23464 26.5006 6.5C26.5006 6.76536 26.3951 7.01986 26.2075 7.2075L17.9137 15.5L26.2075 23.7925Z" fill="currentColor"></path></svg></span>
+    <span class="visually-hidden">Close menu</span>
+  </button>
+  <a class="link" href="#" data-go="sub" data-title="Work"><span data-icon="work"></span><span class="visually-hidden controls-nav">Work</span></a>
+  <a class="link" href="#" data-go="sub" data-title="Resume"><span data-icon="resume"></span><span class="visually-hidden controls-nav">Resume</span></a>
+  <a class="link" href="#" data-go="sub" data-title="Contact"><span data-icon="contact"></span><span class="visually-hidden controls-nav">Contact</span></a>
+  <a class="link" href="#" data-go="sub" data-title="GitHub"><span data-icon="github"></span><span class="visually-hidden controls-nav">GitHub</span></a>
+  <a class="link link-linkedin" href="#" data-go="sub" data-title="LinkedIn"><span data-icon="linkedin"></span><span class="visually-hidden controls-nav">LinkedIn</span></a>
+</nav>
+<div class="proto-note">Narrow the window to watch the nav collapse · <a href="states.html">button states</a></div>
+<script>
+  document.querySelectorAll('[data-icon]').forEach(el => { el.outerHTML = window.ICONS[el.dataset.icon] })
+  const bar = document.getElementById('bar')
+  const back = bar.querySelector('.back')
+  const title = bar.querySelector('.title')
+
+  const SUB_TITLE = 'Journey System Case Study'
+
+  // Filler: eight sections of placeholder text and image blocks.
+  document.getElementById('filler').innerHTML = Array.from({ length: 8 }, (_, i) => `
+    <section class="filler-section">
+      <h2>Section ${i + 1}</h2>
+      <p>Placeholder copy so the page is long enough to scroll. It stands in for a case study's problem framing, process, and outcome, and has no meaning of its own.</p>
+      <p>A second paragraph of placeholder copy, so each section reads as a block of text rather than a single line.</p>
+      <div class="filler-image">Image ${i + 1}</div>
+    </section>`).join('')
+
+  // Home is an empty hash; a sub-page is #sub/{title}.
+  function render() {
+    const m = location.hash.match(/^#sub\/(.+)$/)
+    const isSub = !!m
+    // Every sub-page uses one long title, to test how the bar handles it.
+    const name = isSub ? SUB_TITLE : 'Home'
+    back.hidden = !isSub
+    title.hidden = !isSub
+    bar.classList.toggle('docked', isSub)
+    // Change 7: the selected state, as on the site. Home selects Work; a sub-page selects
+    // the item that opened it. GitHub and LinkedIn leave the site, so they are never selected.
+    const current = isSub ? decodeURIComponent(m[1]) : 'Work'
+    document.querySelectorAll('.link[data-title]').forEach(a => {
+      const on = a.dataset.title === current && !['GitHub', 'LinkedIn'].includes(current)
+      a.classList.toggle('selected', on)
+      if (on) a.setAttribute('aria-current', 'page')
+      else a.removeAttribute('aria-current')
+    })
+    document.getElementById('title').textContent = name
+    document.getElementById('page-heading').textContent = name
+    document.getElementById('page-copy').textContent = isSub
+      ? 'A sub-page. The back button and this page\'s title sit in the top nav.'
+      : 'The home page. The top nav has no back button and no title.'
+    window.scrollTo(0, 0)
+    if (typeof measureStages === 'function') { measureStages(); fitStage() }
+  }
+
+  const menu = document.getElementById('menu')
+  const menuButton = bar.querySelector('.menu-button')
+
+  const isMenuOpen = () => document.body.classList.contains('menu-open')
+
+  // Change 9: motion.dev drives every movement. One ease-in-out curve and one duration,
+  // because each movement travels between two resting places rather than arriving or leaving.
+  const { animate } = window.Motion
+  const EASE = 'easeInOut' // cubic-bezier(0.42, 0, 0.58, 1)
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)')
+  const duration = () => (reduceMotion.matches ? 0 : 0.3)
+  const screen = document.getElementById('screen')
+  const SHADOW_OFF = '0px 0px 0px rgba(18, 17, 17, 0)'
+  const SHADOW_ON = '8px 0px 24px rgba(18, 17, 17, 0.25)' // prototype-only; no token yet
+  let screenAnim = null
+
+  function setMenu(open, returnFocus) {
+    if (open === isMenuOpen()) return
+    document.body.classList.toggle('menu-open', open)
+    // Closed, the menu is out of reach of the keyboard and screen readers.
+    menu.inert = !open
+    menuButton.setAttribute('aria-expanded', String(open))
+    if (open) menu.querySelector('.menu-close').focus({ preventScroll: true })
+    else if (returnFocus) menuButton.focus({ preventScroll: true })
+    // The screen slides 80% of the window's width to uncover the menu, and back again.
+    screenAnim?.stop()
+    screenAnim = animate(screen, {
+      x: open ? '-80vw' : '0vw',
+      boxShadow: open ? SHADOW_ON : SHADOW_OFF,
+    }, { duration: duration(), ease: EASE })
+  }
+
+  document.addEventListener('click', e => {
+    // While the menu is open, a tap anywhere on the slid-over screen only closes it.
+    if (isMenuOpen() && !e.target.closest('#menu')) {
+      e.preventDefault()
+      setMenu(false, true)
+      return
+    }
+    if (e.target.closest('.menu-close')) {
+      setMenu(false, true)
+      return
+    }
+    // Any nav destination, in the bar or the menu, opens its view and closes the menu.
+    const a = e.target.closest('[data-go]')
+    if (a) {
+      e.preventDefault()
+      setMenu(false)
+      location.hash = a.dataset.go === 'sub' ? 'sub/' + encodeURIComponent(a.dataset.title) : ''
+      return
+    }
+    if (e.target.closest('.menu-button')) setMenu(true)
+  })
+
+  // Escape closes the menu and puts focus back on the button.
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isMenuOpen()) setMenu(false, true)
+  })
+
+  // Change 3: collapse in steps as the bar runs out of room, instead of at a breakpoint.
+  // Each stage is tried from roomiest to tightest; the first one that fits wins.
+  // Change 11: the title outranks the nav labels. On a sub-page the labels fold away
+  // before the title gives up a single letter; the title then shortens (ending in an
+  // ellipsis) until only TITLE_SHARE of it still shows, and past that the items move
+  // into the menu. Try ?titleShare=0.5 to change how much of the title must show.
+  const TITLE_SHARE = Number(new URLSearchParams(location.search).get('titleShare') || 0.6)
+  const STAGES = ['stage-full', 'stage-compact', 'stage-menu']
+  const items = bar.querySelector('.items')
+  let stageNow = 'stage-full'
+  let widths = {} // per stage: the width every element of the bar needs, measured at rest
+  let pending = null // the stage change in flight: its animations and how to finish it
+
+  // The title's width with nothing cut off.
+  const titleNatural = () => document.getElementById('title').scrollWidth
+
+  const setStageClass = s => { bar.classList.remove(...STAGES); bar.classList.add(s) }
+
+  // Measured once per view (and after the font loads), never mid-animation, so a
+  // resize only does arithmetic and never disturbs a movement in progress.
+  function measureStages() {
+    finishPending()
+    for (const s of STAGES) {
+      setStageClass(s)
+      widths[s] = {
+        back: back.hidden ? null : back.getBoundingClientRect().width,
+        // Full: the whole title. Icons only: at least TITLE_SHARE of it. Menu: whatever is left.
+        title: title.hidden ? null
+          : s === 'stage-full' ? titleNatural()
+          : s === 'stage-compact' ? titleNatural() * TITLE_SHARE
+          : 0,
+        items: s === 'stage-menu' ? null : items.getBoundingClientRect().width,
+        menu: s === 'stage-menu' ? menuButton.getBoundingClientRect().width : null,
+      }
+    }
+    setStageClass(stageNow)
+  }
+
+  function targetStage() {
+    const cs = getComputedStyle(bar)
+    const room = bar.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
+    for (const s of STAGES) {
+      const parts = Object.values(widths[s]).filter(w => w !== null)
+      const needed = parts.reduce((a, b) => a + b, 0) + parseFloat(cs.columnGap) * (parts.length - 1)
+      if (s === 'stage-menu' || needed <= room) return s
+    }
+  }
+
+  function fitStage() {
+    const to = targetStage()
+    if (to !== stageNow) changeStage(stageNow, to)
+    // Leaving the menu stage closes the menu, since every item is back in the bar.
+    if (stageNow !== 'stage-menu' && isMenuOpen()) setMenu(false)
+  }
+
+  function finishPending() {
+    if (!pending) return
+    const p = pending
+    pending = null
+    // An interrupted animation can still write a value onto its element a frame later,
+    // after this cleanup, leaving a button part-faded or a label stuck at no width. So the
+    // cleanup runs again two frames on, for every element no newer animation has claimed.
+    p.anims.forEach(a => a.cancel())
+    p.finish()
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      p.elements.forEach(el => { if (!pending?.elements.includes(el)) el.removeAttribute('style') })
+    }))
+  }
+
+  // Change 9, part 1: labels fold away into icon-only buttons, and unfold back out.
+  // Each label narrows to nothing and fades while its button's right padding and
+  // icon-to-label gap close up; the buttons beside it slide over as it narrows.
+  function labelled() {
+    return [...bar.querySelectorAll('.items .link'), ...(back.hidden ? [] : [back])]
+  }
+
+  function changeStage(from, to) {
+    finishPending()
+    stageNow = to
+    const opts = { duration: duration(), ease: EASE }
+    const anims = []
+    const cleared = []
+    const clearAll = () => cleared.forEach(el => el.removeAttribute('style'))
+
+    if (from === 'stage-full' && to === 'stage-compact' || from === 'stage-compact' && to === 'stage-full') {
+      const folding = to === 'stage-compact'
+      // Unfolding: switch to full first so the labels can be measured at their natural size.
+      if (!folding) setStageClass('stage-full')
+      for (const el of labelled()) {
+        const label = el.querySelector('.visually-hidden')
+        const cs = getComputedStyle(el)
+        const full = { w: label.getBoundingClientRect().width, pr: parseFloat(cs.paddingRight), gap: parseFloat(cs.columnGap) }
+        const shut = { w: 0, pr: parseFloat(cs.paddingLeft), gap: 0 } // compact: even padding, no label
+        const [a, b] = folding ? [full, shut] : [shut, full]
+        label.style.overflow = 'hidden'
+        cleared.push(el, label)
+        anims.push(animate(label, { width: [a.w + 'px', b.w + 'px'], opacity: folding ? [1, 0] : [0, 1] }, opts))
+        anims.push(animate(el, { paddingRight: [a.pr + 'px', b.pr + 'px'], columnGap: [a.gap + 'px', b.gap + 'px'] }, opts))
+      }
+      pending = { anims, elements: cleared, finish: () => { clearAll(); setStageClass(to) } }
+    } else {
+      // Into or out of the menu stage: the element that arrives fades in where it will rest.
+      setStageClass(to)
+      const arriving = to === 'stage-menu' ? menuButton : items
+      cleared.push(arriving)
+      anims.push(animate(arriving, { opacity: [0, 1] }, opts))
+      pending = { anims, elements: cleared, finish: clearAll }
+    }
+    const mine = pending
+    Promise.all(anims.map(a => a.finished)).then(() => { if (pending === mine) finishPending() })
+  }
+
+  new ResizeObserver(fitStage).observe(bar)
+  document.fonts.ready.then(() => { measureStages(); fitStage() })
+
+  // Shadow once the page scrolls, as on the site.
+  addEventListener('scroll', () => bar.classList.toggle('scrolled', scrollY > 4), { passive: true })
+  addEventListener('hashchange', render)
+  render()
+</script>
+</body>
+</html>
